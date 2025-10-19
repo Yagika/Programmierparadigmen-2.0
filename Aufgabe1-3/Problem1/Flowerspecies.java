@@ -1,3 +1,4 @@
+package Problem1;
 import java.util.Random;
 
 
@@ -32,8 +33,7 @@ public class Flowerspecies {
         }
 
         //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
-        // TODO: this also requires asking since the definition can be misinterpreted.
-        // Update: seems ok
+        // TODO: this also requires asking since the definition can be misinterpreted
         public void bloomtime(float h, float d){ //changes the bloom-state of the given flower based on sunlight and suntime
                 if(this.h_lower <= h && h < this.h_upper){
                         this.b += (q * (d + 3));
@@ -43,7 +43,7 @@ public class Flowerspecies {
                 }
 
                 if(this.h_upper <= h){
-                        this.b -= (q * (d + 3));
+                        this.b -= (q * (d - 3));
                         if(this.b < 0){
                                 this.b = 0;
                         }
@@ -54,11 +54,24 @@ public class Flowerspecies {
         // this method should be called after collecting the total_foodvalue = the sum of all individual food values
         // increases the quality of the seed production of the flowers
         // d = sunshine-time, its a random number between 0-12
-        public void pollinationprobability(float bee_population, float total_foodvalue, float d){
+        public void pollutionprobability(float bee_population, float total_foodvalue, float d){
                 if(bee_population >= total_foodvalue){
                         this.s += this.p * this.b * (d + 1);
-                }
-                else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);
+                }else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);
+        }
+
+
+        //constructor. just check the values for the bounds before constructing the objects. please
+        public Flowerspecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
+                                  double h_lower, double h_upper, double q, double p){
+                this.y = y; this.c_lower = c_lower; this.c_upper = c_upper; this.f_lower = f_lower; this.f_upper = f_upper;
+                this.h_lower = h_lower; this.h_upper = h_upper; this.q = q; this.p = p;
+        }
+
+        @Override
+        public String toString(){
+                return " y:" + y + " b:" + b + " s:" + s + " c_lower:" + c_lower + " c_upper:" + c_upper + " f_lower:" + f_lower + " f_upper:" + f_upper +
+                        " h_lower:" + h_lower + " h_upper:" + h_upper + " q:" + q + " p:" + p;
         }
 
 
@@ -69,7 +82,7 @@ public class Flowerspecies {
         //b and s are set to 0 at the start of the simulation
         public double c_lower; //vermehrungsgrenzen c_i- und c_i+, lower and upper bound for reproduction
         public double c_upper; // I dont see which c_i- and c_i+. c_i+ and c_i- are defined per flower species
-        // TODO: find out lower and upper bounds
+        // TODO: find out lower and upper bounds of c_upper & c_lower
         public double f_lower; //feuchtegrenzen, moisture_bounds: used in conjuction with f (ground moisture) from main simulation
         public double f_upper; // 0 < f_lower < f_upper < 1
 
