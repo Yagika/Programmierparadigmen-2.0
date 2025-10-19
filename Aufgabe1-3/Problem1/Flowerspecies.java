@@ -12,8 +12,10 @@ public class Flowerspecies {
         }
 
         //simulates the propagation of the plants during the restingphase, so during winter, this is done in one go.
-        public void resting_phase(){
-                Random rand = new Random();
+        public void resting_phase(int num){
+                //parse a number that stays the same, so that everyone gets the same outcome and the data
+                //can be recreated.
+                Random rand = new Random(num);
 
                 double min = c_lower;
                 double max = c_upper;
