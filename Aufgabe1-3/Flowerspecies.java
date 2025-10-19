@@ -32,7 +32,8 @@ public class Flowerspecies {
         }
 
         //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
-        // TODO: this also requires asking since the definition can be misinterpreted
+        // TODO: this also requires asking since the definition can be misinterpreted.
+        // Update: seems ok
         public void bloomtime(float h, float d){ //changes the bloom-state of the given flower based on sunlight and suntime
                 if(this.h_lower <= h && h < this.h_upper){
                         this.b += (q * (d + 3));
@@ -42,7 +43,7 @@ public class Flowerspecies {
                 }
 
                 if(this.h_upper <= h){
-                        this.b -= (q * (d - 3));
+                        this.b -= (q * (d + 3));
                         if(this.b < 0){
                                 this.b = 0;
                         }
@@ -53,10 +54,11 @@ public class Flowerspecies {
         // this method should be called after collecting the total_foodvalue = the sum of all individual food values
         // increases the quality of the seed production of the flowers
         // d = sunshine-time, its a random number between 0-12
-        public void pollutionprobability(float bee_population, float total_foodvalue, float d){
+        public void pollinationprobability(float bee_population, float total_foodvalue, float d){
                 if(bee_population >= total_foodvalue){
                         this.s += this.p * this.b * (d + 1);
-                }else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);
+                }
+                else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);
         }
 
 
@@ -66,7 +68,7 @@ public class Flowerspecies {
         public double s = 0; //Qualität samenentwicklung, 0 <= s_i <= 1, the quality of the seed production (?)
         //b and s are set to 0 at the start of the simulation
         public double c_lower; //vermehrungsgrenzen c_i- und c_i+, lower and upper bound for reproduction
-        public double c_upper; // I dont see which c_i- and c_i+
+        public double c_upper; // I dont see which c_i- and c_i+. c_i+ and c_i- are defined per flower species
         // TODO: find out lower and upper bounds
         public double f_lower; //feuchtegrenzen, moisture_bounds: used in conjuction with f (ground moisture) from main simulation
         public double f_upper; // 0 < f_lower < f_upper < 1
