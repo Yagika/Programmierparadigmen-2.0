@@ -25,7 +25,7 @@ public class Flowerspecies {
                 this.y = this.y * this.s * randomdouble;
         }
 
-        public void moisturethreshold(float f){ //this calculates new y value based on if a certain f_lower and f_upper threshold is reached
+        public void moisture_threshold(double f){ //this calculates new y value based on if a certain f_lower and f_upper threshold is reached
                 if(((this.f_lower/2) < f && f < this.f_lower) || (this.f_upper < f && f < (2*this.f_upper))){
                         this.y = this.y * 0.99;
                 }
@@ -36,7 +36,7 @@ public class Flowerspecies {
 
         //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
         // TODO: this also requires asking since the definition can be misinterpreted
-        public void bloomtime(float h, float d){ //changes the bloom-state of the given flower based on sunlight and suntime
+        public void bloom_time(double h, double d){ //changes the bloom-state of the given flower based on sunlight and suntime
                 if(this.h_lower <= h && h < this.h_upper){
                         this.b += (q * (d + 3));
                         if(this.b > 1){
@@ -56,7 +56,7 @@ public class Flowerspecies {
         // this method should be called after collecting the total_foodvalue = the sum of all individual food values
         // increases the quality of the seed production of the flowers
         // d = sunshine-time, its a random number between 0-12
-        public void pollutionprobability(float bee_population, float total_foodvalue, float d){
+        public void pollination_probability(double bee_population, double total_foodvalue, double d){
                 if(bee_population >= total_foodvalue){
                         this.s += this.p * this.b * (d + 1);
                 }else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);

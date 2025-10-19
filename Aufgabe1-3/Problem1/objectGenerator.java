@@ -2,7 +2,6 @@ package Problem1;
 
 import java.util.*;
 import java.util.ArrayList;
-import Problem1.Flowerspecies;
 
 /*
 Generate an object to handle a collection (Group) of flowerspecies.
@@ -15,14 +14,14 @@ have a size ranging from 10-25. These should probably have different kinds of Fl
 bare minimum and have about 12-15 per group.
  */
 
-public class objectGenerator{
+public class objectGenerator {
 
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
     //                            y,    c-,     c+,     f-,     f+,     h-,     h+,     q,      p
     double[][] F = {            {10.0,  1.0,    10.0,   0.1,    0.9,    40,     350,    0.033,  0.5},
-                                {7.0,   2.0,    11.0,   0.2,    0.8,    37,     410,    0.060,  0.7},
-                                {11.0,  2.0,    9.0,   0.3,    0.9,    60,    450,    0.022,  0.5},
-                                {9.0,   3.4,    15.0,   0.1,    0.6,    55,    390,    0.0198,  0.5}};
+            {7.0,   2.0,    11.0,   0.2,    0.8,    37,     410,    0.060,  0.7},
+            {11.0,  2.0,    9.0,   0.3,    0.9,    60,    450,    0.022,  0.5},
+            {9.0,   3.4,    15.0,   0.1,    0.6,    55,    390,    0.0198,  0.5}};
 
     //Returns an ArrayList filled with FlowerSpecies objects.
     public ArrayList<Flowerspecies> generatePlantGroups(int num_group){
@@ -37,10 +36,11 @@ public class objectGenerator{
         for(int i = 0; i < initCapacity; i++){
 
             //deals with hardcoded values
-            if(i < F.length){
+            if(i < F.length) {
                 Flowerspecies species = new Flowerspecies(F[i][0],F[i][1],F[i][2],F[i][3],F[i][4],F[i][5],F[i][6],F[i][7],F[i][8]);
                 plantGroup.add(species);
-            }else{
+            }
+            else {
                 //deals with randomly generated values
                 double[] v = generateValues(rand);
                 Flowerspecies species = new Flowerspecies(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]);
