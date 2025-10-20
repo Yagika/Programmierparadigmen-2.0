@@ -71,6 +71,6 @@ public class Test {
              System.out.println("-------------------------------");
          }
 
-         System.out.println("\nAll groups finished — CSV files created.");
+         System.out.println("\nAll groups finished.");
     }
 }
