@@ -1,101 +1,140 @@
 package Problem1;
+
 import java.util.Random;
 
 
-
+/**
+ * Class to represent a flower species with their parameters.
+ * Handles its own state changes during simulation
+ */
 public class Flowerspecies {
-        //class to create and maintain different flower-species
-        //handles every flower related calculation itself. how cool!
+    private double y; // Growth strength (>=0)
+    private double b = 0; // Bloom amount (0..1)
+    private double s = 0; // Seed quality (0..1)
+    private final double c_lower, c_upper; // Reproduction limits
+    private final double f_lower, f_upper; // Moisture limits (0 < f_lower < f_upper < 1)
+    private final double h_lower, h_upper; // Sunlight limits (hours, cumulative)
+    private final double q; // Bloom intensity (0 < q < 1/15)
+    private final double p; // Pollination probability (0 < p < 1/(h_upper - h_lower))
 
-        public double foodvalue(){ //Nahrungsangebot (food supply) n SUM_i(y_i * b_i), in here its the sum of the individual plant,
-                return y * b;           //at the end it should be summed up (n for bee population calculation!)
+    /**
+     * Constructor initializes all biological parameters of a flower species.
+     */
+    public Flowerspecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
+                         double h_lower, double h_upper, double q, double p) {
+        this.y = Math.max(0.0, y);
+        this.c_lower = c_lower;
+        this.c_upper = c_upper;
+        this.f_lower = f_lower;
+        this.f_upper = f_upper;
+        this.h_lower = h_lower;
+        this.h_upper = h_upper;
+        this.q = q;
+        this.p = p;
+    }
+
+    /**
+     * Calculates food value provided by this flower species (y * b).
+     */
+    public double foodvalue() { //Nahrungsangebot (food supply) n SUM_i(y_i * b_i), in here its the sum of the individual plant,
+        return y * b;           //at the end it should be summed up (n for bee population calculation!)
+    }
+
+    /**
+     * Simulates the resting (winter) phase: y is multiplied by s and by a random
+     * factor in [c_lower, c_upper]. Random is passed from outside to control seeding.
+     */
+    public void resting_phase(Random rand) {
+        //parse a number that stays the same, so that everyone gets the same outcome and the data
+        //can be recreated.
+        double randomdouble = rand.nextDouble() * (c_upper - c_lower) + c_lower;
+        this.y = this.y * this.s * randomdouble;
+        if (this.y < 0) this.y = 0;
+    }
+
+    /**
+     * Adjusts growth (y) depending on soil moisture (f).
+     */
+    public void moisture_threshold(double f) { //this calculates new y value based on if a certain f_lower and f_upper threshold is reached
+        if (((this.f_lower / 2.0) < f && f < this.f_lower) || (this.f_upper < f && f < (2.0 * this.f_upper))) {
+            this.y = this.y * 0.99;
         }
-
-        //simulates the propagation of the plants during the restingphase, so during winter, this is done in one go.
-        public void resting_phase(int num){
-                //parse a number that stays the same, so that everyone gets the same outcome and the data
-                //can be recreated.
-                Random rand = new Random(num);
-
-                double min = c_lower;
-                double max = c_upper;
-
-                double randomdouble = rand.nextDouble() * (max - min) + min;
-
-                this.y = this.y * this.s * randomdouble;
+        if (f <= (f_lower / 2.0) || f >= (2.0 * f_upper)) {
+            this.y = this.y * 0.97;
         }
+        if (this.y < 0) this.y = 0;
+    }
 
-        public void moisture_threshold(double f){ //this calculates new y value based on if a certain f_lower and f_upper threshold is reached
-                if(((this.f_lower/2) < f && f < this.f_lower) || (this.f_upper < f && f < (2*this.f_upper))){
-                        this.y = this.y * 0.99;
-                }
-                if(f <= (f_lower/2) || f >= (f_upper*2)){
-                        this.y = this.y * 0.97;
-                }
+    //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
+    // TODO: this also requires asking since the definition can be misinterpreted
+
+    /**
+     * Changes blooming state based on sunlight amount.
+     */
+    public void bloom_time(double h, double d) { //changes the bloom-state of the given flower based on sunlight and suntime
+        if (this.h_lower <= h && h < this.h_upper) {
+            this.b += (q * (d + 3.0));
+            if (this.b > 1.0) this.b = 1.0;
+        } else if (this.h_upper <= h) {
+            this.b -= (q * (d + 3.0));
+            if (this.b < 0.0) this.b = 0.0;
         }
+        // if h < h_lower -> no change (still 0 until threshold)
+    }
 
-        //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
-        // TODO: this also requires asking since the definition can be misinterpreted
-        public void bloom_time(double h, double d){ //changes the bloom-state of the given flower based on sunlight and suntime
-                if(this.h_lower <= h && h < this.h_upper){
-                        this.b += (q * (d + 3));
-                        if(this.b > 1){
-                                this.b = 1;
-                        }
-                }
+    // TODO: ask if this is actually the right interpretation.
+    // this method should be called after collecting the total_foodvalue = the sum of all individual food values
+    // increases the quality of the seed production of the flowers
+    // d = sunshine-time, its a random number between 0-12
 
-                if(this.h_upper <= h){
-                        this.b -= (q * (d - 3));
-                        if(this.b < 0){
-                                this.b = 0;
-                        }
-                }
+    /**
+     * Increases seed quality (s) based on pollination probability and bee activity.
+     *
+     * @param bee_population current bee population x
+     * @param total_foodvalue n = sum yi*bi across all species
+     * @param d today's sunshine (0..12)
+     */
+    public void pollination_probability(double bee_population, double total_foodvalue, double d) {
+        if (total_foodvalue <= 0.0) {
+            // no flowers in bloom -> no seed increase
+            return;
         }
-
-        // TODO: ask if this is actually the right interpretation.
-        // this method should be called after collecting the total_foodvalue = the sum of all individual food values
-        // increases the quality of the seed production of the flowers
-        // d = sunshine-time, its a random number between 0-12
-        public void pollination_probability(double bee_population, double total_foodvalue, double d){
-                if(bee_population >= total_foodvalue){
-                        this.s += this.p * this.b * (d + 1);
-                }else this.s += this.p * this.b * (d + 1) * (bee_population / total_foodvalue);
+        if (bee_population >= total_foodvalue) {
+            this.s += this.p * this.b * (d + 1.0);
+        } else {
+            this.s += this.p * this.b * (d + 1.0) * (bee_population / total_foodvalue);
         }
+        if (this.s > 1.0) this.s = 1.0;
+        if (this.s < 0.0) this.s = 0.0;
+    }
+    /**
+     * Resets the blooming in the beginning of the new year
+     */
+    public void resetForVegetation() {
+        this.b = 0.0;
+        this.s = 0.0;
+    }
 
+    @Override
+    public String toString() {
+        return String.format("Flower [y=%.2f, b=%.2f, s=%.2f, f=(%.2f-%.2f), h=(%.1f-%.1f)]",
+                y, b, s, f_lower, f_upper, h_lower, h_upper);
+    }
+    /**
+     * Copy constructor to create new object with same parameters.
+     */
+    public Flowerspecies copy() {
+        Flowerspecies f = new Flowerspecies(this.y, this.c_lower, this.c_upper, this.f_lower, this.f_upper,
+                this.h_lower, this.h_upper, this.q, this.p);
+        f.b = this.b;
+        f.s = this.s;
+        return f;
+    }
 
-        //constructor. just check the values for the bounds before constructing the objects. please
-        public Flowerspecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
-                                  double h_lower, double h_upper, double q, double p){
-                this.y = y; this.c_lower = c_lower; this.c_upper = c_upper; this.f_lower = f_lower; this.f_upper = f_upper;
-                this.h_lower = h_lower; this.h_upper = h_upper; this.q = q; this.p = p;
-        }
-
-        @Override
-        public String toString(){
-                return " y:" + y + " b:" + b + " s:" + s + " c_lower:" + c_lower + " c_upper:" + c_upper + " f_lower:" + f_lower + " f_upper:" + f_upper +
-                        " h_lower:" + h_lower + " h_upper:" + h_upper + " q:" + q + " p:" + p;
-        }
-
-
-
-        public double y; //Wuchskraft, y_i >= 0, means the number of bees that find food through this plantspecies
-        public double b = 0; //Blüte-zahl, 0 <= b_i <= 1 amount of plants in bloom
-        public double s = 0; //Qualität samenentwicklung, 0 <= s_i <= 1, the quality of the seed production (?)
-        //b and s are set to 0 at the start of the simulation
-        public double c_lower; //vermehrungsgrenzen c_i- und c_i+, lower and upper bound for reproduction
-        public double c_upper; // I dont see which c_i- and c_i+. c_i+ and c_i- are defined per flower species
-        // TODO: find out lower and upper bounds of c_upper & c_lower
-        public double f_lower; //feuchtegrenzen, moisture_bounds: used in conjuction with f (ground moisture) from main simulation
-        public double f_upper; // 0 < f_lower < f_upper < 1
-
-        public double h_lower; //Blühgrenzen, specifies the sunhours where the blooming begins/ends
-        public double h_upper; //0 < h_lower < h_upper
-        public double q; //Blüteintesität, bloomintensivity 0 < q_i < 1/15
-
-        public double p; //Bestaubwahrscheinlichkeit, Pollination probability, 0 < p_i < 1/h_lower - h_upper
-
-
-        }
+    public double getY() { return y; }
+    public double getB() { return b; }
+    public double getS() { return s; }
+}
 
 
 

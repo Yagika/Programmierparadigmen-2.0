@@ -14,49 +14,55 @@ have a size ranging from 10-25. These should probably have different kinds of Fl
 bare minimum and have about 12-15 per group.
  */
 
-public class objectGenerator {
+/**
+ * Creates lists of flower species.
+ * Some are predefined, others are randomly generated.
+ */
+public class ObjectGenerator {
 
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
-    //                            y,    c-,     c+,     f-,     f+,     h-,     h+,     q,      p
-    double[][] F = {            {10.0,  1.0,    10.0,   0.1,    0.9,    40,     350,    0.033,  0.5},
-            {7.0,   2.0,    11.0,   0.2,    0.8,    37,     410,    0.060,  0.7},
-            {11.0,  2.0,    9.0,   0.3,    0.9,    60,    450,    0.022,  0.5},
-            {9.0,   3.4,    15.0,   0.1,    0.6,    55,    390,    0.0198,  0.5}};
+    //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p
+    private final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5},
+            {7.0, 2.0, 11.0, 0.2, 0.8, 37, 410, 0.060, 0.7},
+            {11.0, 2.0, 9.0, 0.3, 0.9, 60, 450, 0.022, 0.5},
+            {9.0, 3.4, 15.0, 0.1, 0.6, 55, 390, 0.0198, 0.5}};
 
-    //Returns an ArrayList filled with FlowerSpecies objects.
-    public ArrayList<Flowerspecies> generatePlantGroups(int num_group){
+    /**
+     * Generates a group of flower species.
+     *
+     * @param num_group Used for random seed and group size.
+     * @return List of generated Flowerspecies objects.
+     */
+    public ArrayList<Flowerspecies> generatePlantGroups(int num_group) {
         //keep the randomness contained, so different people don't have different values
         Random rand = new Random(num_group);
-        int initCapacity = 12 + num_group + 1;
+        int initCapacity = 10 + (num_group % 16); // ensure between 10 and 25
 
         //initial capacity shouldn't really matter since its dynamic but what ever performance right?
-        ArrayList<Flowerspecies> plantGroup = new ArrayList<Flowerspecies>(initCapacity);
+        ArrayList<Flowerspecies> plantGroup = new ArrayList<>();
 
         //create individual PlantSpecies objects.
-        for(int i = 0; i < initCapacity; i++){
+        for (int i = 0; i < initCapacity; i++) {
 
             //deals with hardcoded values
-            if(i < F.length) {
-                Flowerspecies species = new Flowerspecies(F[i][0],F[i][1],F[i][2],F[i][3],F[i][4],F[i][5],F[i][6],F[i][7],F[i][8]);
-                plantGroup.add(species);
-            }
-            else {
+            if (i < F.length) {
+                double[] v = F[i];
+                plantGroup.add(new Flowerspecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+            } else {
                 //deals with randomly generated values
                 double[] v = generateValues(rand);
-                Flowerspecies species = new Flowerspecies(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]);
-                plantGroup.add(species);
+                plantGroup.add(new Flowerspecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
             }
-
         }
-
-
         return plantGroup;
     }
 
-
-    private double[] generateValues(Random rand){
+    /**
+     * Generates random flower parameters for variety.
+     */
+    private double[] generateValues(Random rand) {
         //set array with the size of the hardcoded array, if changes are needed
-        double[] values = new double[F[0].length];
+        double[] values = new double[9];
 
         //rand.nextDouble() * (max - min) + min;
 
@@ -80,7 +86,9 @@ public class objectGenerator {
         //q[7] 0 < q < 1/15 (0.0666)
         values[7] = rand.nextDouble() * (0.0666);
         //p[8] 0 < p < 1/h_max - h_min
-        values[8] = rand.nextDouble() * ((1/(values[6]-values[5])));
+        double denom = values[6] - values[5];
+        if (denom < 1.0) denom = 1.0;
+        values[8] = rand.nextDouble() * (1.0 / denom);
 
         return values;
     }
