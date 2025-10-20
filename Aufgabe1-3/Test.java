@@ -37,51 +37,49 @@ import java.util.Random;
  */
 public class Test {
 
-    public static void main(String[] args) {
+     public static void main(String[] args) {
 
-        ObjectGenerator generator = new ObjectGenerator();
-        SimulationLogic simulator = new SimulationLogic();
+         ObjectGenerator generator = new ObjectGenerator();
+         SimulationLogic simulator = new SimulationLogic();
 
-        final int GROUPS = 3;
-        final int RUNS_PER_GROUP = 10;
-        final int YEARS = 25;
+         final int GROUPS = 5;
+         final int YEARS = 25;
 
-        System.out.println("=== Bee & Flower Simulation ===");
+         System.out.println("=== Bee & Flower Simulation ===");
 
-        for (int g = 1; g <= GROUPS; g++) {
-            System.out.printf("%n--- Processing Group %d --- %n", g);
+         for (int g = 1; g <= GROUPS; g++) {
+             System.out.printf("%n--------  Group %d -------- %n", g);
 
+             ArrayList<Flowerspecies> group = generator.generatePlantGroups(g);
 
-            for (int run = 1; run <= RUNS_PER_GROUP; run++) {
-                ArrayList<Flowerspecies> group = generator.generatePlantGroups(g);
+             Random groupRand = new Random(g * 1234L);
+             double initialBees = 50.0 + groupRand.nextDouble() * 150.0;
+             initialBees = Math.round(initialBees);
 
-                double initialBees = 50.0 + (new Random(g * 100 + run)).nextDouble() * 150.0;
+             long seed = g * 1000L;
+             boolean detailed = true;
 
-                long seed = g * 1000L + run; // weather seed
-                boolean detailed = (g == 1 && run == 1);
+             SimulationLogic.SimulationResult result = simulator.simulate(
+                     YEARS, initialBees, group, seed, detailed);
 
-                SimulationLogic.SimulationResult result = simulator.simulate(YEARS, initialBees, group, seed, detailed);
+             String filename = String.format("statistics_group%d.csv", g);
+             try (FileWriter writer = new FileWriter(filename)) {
+                 writer.write("group,years,initialBees,finalBees,avgBees,avgFood\n");
+                 writer.write(String.format("%d,%d,%.0f,%.0f,%.0f,%.4f\n",
+                         g, YEARS, initialBees, result.finalBees, result.avgBees, result.avgFood));
 
-                // Save basic summary statistics
-                String filename = String.format("statistics_group%d_run%d.csv", g, run);
-                try (FileWriter writer = new FileWriter(filename)) {
-                    writer.write("group,run,years,initialBees,finalBees,avgBees,avgFood\n");
-                    writer.write(String.format("%d,%d,%d,%.4f,%.4f,%.4f,%.4f\n",
-                            g, run, YEARS, initialBees, result.finalBees, result.avgBees, result.avgFood));
+                 writer.write("\nspecies_index,final_y\n");
+                 for (int i = 0; i < group.size(); i++) {
+                     writer.write(String.format("%d,%.6f\n", i + 1, group.get(i).getY()));
+                 }
+             } catch (IOException e) {
+                 System.err.println("Error writing CSV: " + e.getMessage());
+             }
 
-                    writer.write("species_index,final_y\n");
-                    for (int i = 0; i < group.size(); i++) {
-                        writer.write(String.format("%d,%.6f\n", i + 1, group.get(i).getY()));
-                    }
-                } catch (IOException e) {
-                    System.err.println("Error writing CSV: " + e.getMessage());
-                }
+             System.out.printf("Group %d finished -> finalBees=%.0f avgBees=%.0f avgFood=%.2f (CSV: %s)%n",
+                     g, result.finalBees, result.avgBees, result.avgFood, filename);
+         }
 
-                System.out.printf("Group %d Run %d -> finalBees=%.2f avgBees=%.2f avgFood=%.2f (CSV: %s)%n",
-                        g, run, result.finalBees, result.avgBees, result.avgFood, filename);
-            }
-        }
-
-        System.out.println("\nAll simulations finished. CSV statistics files created for each run.");
+         System.out.println("\nAll groups finished — CSV files created.");
     }
 }
