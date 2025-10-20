@@ -2,8 +2,6 @@ import Problem1.Flowerspecies;
 import Problem1.SimulationLogic;
 import Problem1.ObjectGenerator;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -62,22 +60,15 @@ public class Test {
              SimulationLogic.SimulationResult result = simulator.simulate(
                      YEARS, initialBees, group, seed, detailed);
 
-             String filename = String.format("statistics_group%d.csv", g);
-             try (FileWriter writer = new FileWriter(filename)) {
-                 writer.write("group,years,initialBees,finalBees,avgBees,avgFood\n");
-                 writer.write(String.format("%d,%d,%.0f,%.0f,%.0f,%.4f\n",
-                         g, YEARS, initialBees, result.finalBees, result.avgBees, result.avgFood));
+             System.out.printf("Group %d results:%n", g);
+             System.out.printf("  Years simulated: %d%n", YEARS);
+             System.out.printf("  Initial bees: %.0f%n", initialBees);
+             System.out.printf("  Final bees: %.0f%n", result.finalBees);
+             System.out.printf("  Average bees: %.0f%n", result.avgBees);
+             System.out.printf("  Average food: %.4f%n", result.avgFood);
 
-                 writer.write("\nspecies_index,final_y\n");
-                 for (int i = 0; i < group.size(); i++) {
-                     writer.write(String.format("%d,%.6f\n", i + 1, group.get(i).getY()));
-                 }
-             } catch (IOException e) {
-                 System.err.println("Error writing CSV: " + e.getMessage());
-             }
 
-             System.out.printf("Group %d finished -> finalBees=%.0f avgBees=%.0f avgFood=%.2f (CSV: %s)%n",
-                     g, result.finalBees, result.avgBees, result.avgFood, filename);
+             System.out.println("-------------------------------");
          }
 
          System.out.println("\nAll groups finished — CSV files created.");
