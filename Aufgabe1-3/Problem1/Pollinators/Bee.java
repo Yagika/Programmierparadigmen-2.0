@@ -4,7 +4,7 @@ package Problem1.Pollinators;
 public class Bee {
 
     // Not sure how to implement those
-    double population; // Number of bees in the population
+    public double population; // Number of bees in the population
     double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
     double f_lower, f_upper; // Moisture limits for nesting
     double h_lower, h_upper; // Sunlight limits for nesting
@@ -29,7 +29,7 @@ public class Bee {
     /**
      * Calculates the number of bees for the next day.
      */
-    private double calculate_population(double population, double n, double reserve) {
+    public double calculate_population(double population, double n, double reserve) {
         if (population <= 0.0) return 10.0;
         double availableFood = n + reserve * 0.01;
         double demand = population * 0.2;

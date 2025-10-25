@@ -31,26 +31,27 @@ public class SimulationLogic {
         double totalFood = 0;
         double reserve = 0.0;
 
-        x = Math.max( Math.round(x), 10.0 );
+//        x = Math.max( Math.round(x), 10.0 );
 
         for (int year = 1; year <= num_years; year++) {
             for (FlowerSpecies plant : plant_group) {
                 plant.resetForVegetation();
             }
 
-            if (reserve > 1.0) {
-                double boost = Math.floor(reserve * 0.02);
-                if (boost >= 1.0) {
-                    x += boost;
-                    reserve -= boost * 0.5;
-                }
-            }
+            // TODO: not sure what to do with this right now
+//            if (reserve > 1.0) {
+//                double boost = Math.floor(reserve * 0.02);
+//                if (boost >= 1.0) {
+//                    x += boost;
+//                    reserve -= boost * 0.5;
+//                }
+//            }
 
             double f = rand.nextDouble();
             double h = 0.0;
             double n = 0.0;
 
-            if (detailed) System.out.printf("Year %d start: initial bees=%.0f, initial f=%.3f reserve=%.3f%n", year, x, f, reserve);
+            if (detailed) System.out.printf("Year %d start: initial bees=%.0f, initial f=%.3f reserve=%.3f%n", year, totalBees, f, reserve);
 
             // Vegetation period: 240 days
             for (int day = 1; day <= VEGETATION_DAYS; day++) {
@@ -65,54 +66,67 @@ public class SimulationLogic {
                     plant.bloom_time(h, d);
                 }
 
+                // Calculate total number of bees
+                // TODO: check what to do with this. Now pollination probability depends on many different kinds of bees
+                totalBees = calculate_total_bees(bees);
+
                 n = calculate_food_supply(plant_group);
 
                 if (n < 0.0) n = 0.0;
 
                 // pollination
+                // TODO: check what to do with this
                 for (FlowerSpecies plant : plant_group) {
-                    plant.pollination_probability(x, n, d);
+                    plant.pollination_probability(totalBees, n, d);
                 }
 
                 reserve += n * 0.3;
                 reserve = Math.min(reserve, 1e6);
 
-                x = calculate_bees(x, n, reserve);
+                // Recalculate population of bees for every wild bee species
+                // TODO: improve this calculation (maybe take into account competition for food or smth)
+                for (Bee bee: bees) {
+                    bee.calculate_population(bee.population, n, reserve);
+                }
 
                 if (detailed && (day <= 3 || day % 60 == 0)) {
                     System.out.printf(" Year %d Day %d: d=%.2f h=%.2f f=%.3f n=%.3f bees=%.0f reserve=%.2f%n",
-                            year, day, d, h, f, n, x, reserve);
+                            year, day, d, h, f, n, totalBees, reserve);
                 }
             }
 
             // Winter: bee survival
+            // TODO: Check what to do with this (maybe different bees should have different death rates during winter)
             double winterMult = 0.6 + rand.nextDouble() * 0.3;
-            x = Math.round(x * winterMult);
+            for (Bee bee: bees) {
+                bee.population = Math.round(bee.population * winterMult);
 
-            if (x < 10) x = 10;
+                if (bee.population < 10) bee.population = 10;
 
-            double winterConsumption = Math.min(reserve, x * 0.5);
-            reserve = Math.max(0.0, reserve - winterConsumption);
+                double winterConsumption = Math.min(reserve, bee.population * 0.5);
+                reserve = Math.max(0.0, reserve - winterConsumption);
 
-            // Plant resting phase
-            for (FlowerSpecies plant : plant_group) {
-                plant.resting_phase(rand);
+                // Plant resting phase
+                for (FlowerSpecies plant : plant_group) {
+                    plant.resting_phase(rand);
+                }
             }
 
-            totalBees += x;
+            // Maybe recalculate number of bees at the end of the day
+            totalBees = calculate_total_bees(bees);
             totalFood += n;
 
             if (detailed) {
-                System.out.printf(" Year %d end: bees=%.0f (after winter=%.3f), last n=%.3f reserve=%.2f%n", year, x, winterMult, n, reserve);
+                System.out.printf(" Year %d end: bees=%.0f (after winter=%.3f), last n=%.3f reserve=%.2f%n", year, totalBees, winterMult, n, reserve);
             } else {
-                System.out.printf("Year %d → Bees: %.0f | Food: %.3f | Reserve: %.2f%n", year, x, n, reserve);
+                System.out.printf("Year %d → Bees: %.0f | Food: %.3f | Reserve: %.2f%n", year, totalBees, n, reserve);
             }
         }
 
         double avgBees = totalBees / num_years;
         double avgFood = totalFood / num_years;
 
-        return new SimulationResult(Math.round(x), Math.round(avgBees), avgFood);
+        return new SimulationResult(Math.round(totalBees), Math.round(avgBees), avgFood);
     }
 
     /**
@@ -126,6 +140,22 @@ public class SimulationLogic {
             n += val;
         }
         return n;
+    }
+
+    /**
+     * Calculate total number of bees
+     * @param bees Array list of bees
+     * @return total number of bees of all kinds
+     */
+    // TODO: This probably should be improved as different kinds of bees should interact differently with flowers
+    private double calculate_total_bees(ArrayList<Bee> bees) {
+        double totalBees = 0.0;
+
+        for (Bee bee : bees) {
+            totalBees += bee.population;
+        }
+
+        return totalBees;
     }
 
     /**

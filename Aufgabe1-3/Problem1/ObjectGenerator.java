@@ -53,7 +53,7 @@ public class ObjectGenerator {
                 plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
             } else {
                 //deals with randomly generated values
-                double[] v = generateValues(rand);
+                double[] v = generateFlowerValues(rand);
                 plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
             }
         }
@@ -64,10 +64,15 @@ public class ObjectGenerator {
      * Generates bees of different species
      */
     // TODO: Implement generation of bees
-    public ArrayList<Bee> generateBees() {
+    public ArrayList<Bee> generateBees(int num_bees) {
+        Random rand = new Random(num_bees);
+
         ArrayList<Bee> bees = new ArrayList<>();
 
-
+        for (int i = 0; i < num_bees; i++) {
+            double[] v = generateBeeValues(rand);
+            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+        }
 
         return bees;
     }
@@ -78,7 +83,7 @@ public class ObjectGenerator {
     // Assignment asks to consider different approach to generate random values (Choose distribution that more closely
     // resembles nature)
     // TODO: Check how to generate random values (e.g. using Gaussian distribution)
-    private double[] generateValues(Random rand) {
+    private double[] generateFlowerValues(Random rand) {
         //set array with the size of the hardcoded array, if changes are needed
         double[] values = new double[9];
 
@@ -107,6 +112,32 @@ public class ObjectGenerator {
         double denom = values[6] - values[5];
         if (denom < 1.0) denom = 1.0;
         values[8] = rand.nextGaussian() * (1.0 / denom);
+
+        return values;
+    }
+
+    // TODO: Find out how to generate values here
+    private double[] generateBeeValues(Random rand) {
+        double[] values = new double[9];
+
+        // Population of bees
+        values[0] = 20.0 + rand.nextGaussian() * 75.0;
+
+        // Active period of bees
+        values[1] = rand.nextGaussian() * 120.0;
+        values[2] = values[1] + rand.nextGaussian() * 240;
+
+        // Moisture requirements for nesting
+        values[3] = rand.nextGaussian() * 150.0;
+        values[4] = 50.0 + rand.nextGaussian() * 150.0;
+
+        // Sun requirements for nesting. Maybe it's better not to bother with these!
+        values[5] = rand.nextGaussian();
+        values[6] = rand.nextGaussian();
+
+        // Distance limits between nest and food for nesting. Not sure how it's supposed to work
+        values[7] = 5.0 + rand.nextGaussian() * 100.0;
+        values[8] = values[7] + rand.nextGaussian() * 300.0;
 
         return values;
     }

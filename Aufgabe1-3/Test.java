@@ -43,16 +43,17 @@ public class Test {
 
          final int GROUPS = 5;
          final int YEARS = 25;
+         final int NUM_BEES = 3; // Generate 3 wild bee species to simulate
 
          System.out.println("=== Bee & Flower Simulation ===");
+
+         // TODO: Generate bees here (or maybe inside the loop)
+         ArrayList<Bee> bees = generator.generateBees(NUM_BEES);
 
          for (int g = 1; g <= GROUPS; g++) {
              System.out.printf("%n--------  Group %d -------- %n", g);
 
              ArrayList<FlowerSpecies> group = generator.generatePlantGroups(g);
-
-             // Generate bees here
-             ArrayList<Bee> bees = generator.generateBees();
 
 //             Random groupRand = new Random(g * 1234L);
 //             double initialBees = 50.0 + groupRand.nextDouble() * 150.0;
