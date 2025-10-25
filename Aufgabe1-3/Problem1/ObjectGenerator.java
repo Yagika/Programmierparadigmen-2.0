@@ -63,9 +63,9 @@ public class ObjectGenerator {
     /**
      * Generates bees of different species
      */
-    // TODO: implement generation of bees
+    // TODO: Implement generation of bees
     public ArrayList<Bee> generateBees() {
-        ArrayList<Object> bees = new ArrayList<>();
+        ArrayList<Bee> bees = new ArrayList<>();
 
 
 
@@ -75,6 +75,9 @@ public class ObjectGenerator {
     /**
      * Generates random flower parameters for variety.
      */
+    // Assignment asks to consider different approach to generate random values (Choose distribution that more closely
+    // resembles nature)
+    // TODO: Check how to generate random values (e.g. using Gaussian distribution)
     private double[] generateValues(Random rand) {
         //set array with the size of the hardcoded array, if changes are needed
         double[] values = new double[9];
@@ -82,28 +85,28 @@ public class ObjectGenerator {
         //rand.nextDouble() * (max - min) + min;
 
         //y v[0]:
-        values[0] = rand.nextDouble() * (20.0 - 3.0) + 3.0;
+        values[0] = rand.nextGaussian() * (20.0 - 3.0) + 3.0;
         //c_min v[1] and c_max v[2]:
         //1.0 < c_min < 6.0
-        values[1] = rand.nextDouble() * (6.0 - 1.0) + 1.0;
+        values[1] = rand.nextGaussian() * (6.0 - 1.0) + 1.0;
         //c_min < c_max < 20.0
-        values[2] = rand.nextDouble() * (20.0 - values[1]) + values[1];
+        values[2] = rand.nextGaussian() * (20.0 - values[1]) + values[1];
 
         //f_min [v3] and f_max v[4]:
         //0 < f_min < f_max < 1
-        values[3] = rand.nextDouble() / 2.0; //so f_min is 0.0-0.5 since rand goes from 0.0-1.0
-        values[4] = rand.nextDouble() * (1.0 - values[3]) + values[3];
+        values[3] = rand.nextGaussian() / 2.0; //so f_min is 0.0-0.5 since rand goes from 0.0-1.0
+        values[4] = rand.nextGaussian() * (1.0 - values[3]) + values[3];
 
         //h_min [v5] and h_max [v6]:
-        values[5] = rand.nextDouble() * (100.0 + 10.0) + 10.0; //so the min_bloomtime goes from 0.0-100.0
-        values[6] = rand.nextDouble() * (500.0 - values[5]) + values[5];
+        values[5] = rand.nextGaussian() * (100.0 + 10.0) + 10.0; //so the min_bloomtime goes from 0.0-100.0
+        values[6] = rand.nextGaussian() * (500.0 - values[5]) + values[5];
 
         //q[7] 0 < q < 1/15 (0.0666)
-        values[7] = rand.nextDouble() * (0.0666);
+        values[7] = rand.nextGaussian() * (0.0666);
         //p[8] 0 < p < 1/h_max - h_min
         double denom = values[6] - values[5];
         if (denom < 1.0) denom = 1.0;
-        values[8] = rand.nextDouble() * (1.0 / denom);
+        values[8] = rand.nextGaussian() * (1.0 / denom);
 
         return values;
     }

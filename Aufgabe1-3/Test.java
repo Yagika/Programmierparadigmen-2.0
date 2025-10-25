@@ -50,7 +50,7 @@ public class Test {
              System.out.printf("%n--------  Group %d -------- %n", g);
 
              ArrayList<FlowerSpecies> group = generator.generatePlantGroups(g);
-             
+
              // Generate bees here
              ArrayList<Bee> bees = generator.generateBees();
 

@@ -65,8 +65,7 @@ public class FlowerSpecies {
         if (this.y < 0) this.y = 0;
     }
 
-    //sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
-    // TODO: this also requires asking since the definition can be misinterpreted
+    // Sunhours h = sum of sunshine-time d over the time of the vegetationperiod so far.
 
     /**
      * Changes blooming state based on sunlight amount.
@@ -82,7 +81,6 @@ public class FlowerSpecies {
         // if h < h_lower -> no change (still 0 until threshold)
     }
 
-    // TODO: ask if this is actually the right interpretation.
     // this method should be called after collecting the total_foodvalue = the sum of all individual food values
     // increases the quality of the seed production of the flowers
     // d = sunshine-time, its a random number between 0-12
