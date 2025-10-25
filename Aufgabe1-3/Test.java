@@ -1,4 +1,4 @@
-import Problem1.Flowerspecies;
+import Problem1.FlowerSpecies;
 import Problem1.SimulationLogic;
 import Problem1.ObjectGenerator;
 
@@ -48,7 +48,7 @@ public class Test {
          for (int g = 1; g <= GROUPS; g++) {
              System.out.printf("%n--------  Group %d -------- %n", g);
 
-             ArrayList<Flowerspecies> group = generator.generatePlantGroups(g);
+             ArrayList<FlowerSpecies> group = generator.generatePlantGroups(g);
 
              Random groupRand = new Random(g * 1234L);
              double initialBees = 50.0 + groupRand.nextDouble() * 150.0;

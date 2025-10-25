@@ -7,7 +7,7 @@ import java.util.Random;
  * Class to represent a flower species with their parameters.
  * Handles its own state changes during simulation
  */
-public class Flowerspecies {
+public class FlowerSpecies {
     private double y; // Growth strength (>=0)
     private double b = 0; // Bloom amount (0..1)
     private double s = 0; // Seed quality (0..1)
@@ -20,7 +20,7 @@ public class Flowerspecies {
     /**
      * Constructor initializes all biological parameters of a flower species.
      */
-    public Flowerspecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
+    public FlowerSpecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
                          double h_lower, double h_upper, double q, double p) {
         this.y = Math.max(0.0, y);
         this.c_lower = c_lower;
@@ -123,8 +123,8 @@ public class Flowerspecies {
     /**
      * Copy constructor to create new object with same parameters.
      */
-    public Flowerspecies copy() {
-        Flowerspecies f = new Flowerspecies(this.y, this.c_lower, this.c_upper, this.f_lower, this.f_upper,
+    public FlowerSpecies copy() {
+        FlowerSpecies f = new FlowerSpecies(this.y, this.c_lower, this.c_upper, this.f_lower, this.f_upper,
                 this.h_lower, this.h_upper, this.q, this.p);
         f.b = this.b;
         f.s = this.s;

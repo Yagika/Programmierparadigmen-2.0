@@ -21,7 +21,7 @@ public class SimulationLogic {
      * @param detailed if true - prints daily and yearly intermediate results
      * @return statistics about the simulation (average and final values)
      */
-    public SimulationResult simulate(int num_years, double x, ArrayList<Flowerspecies> plant_group, long randomSeed, boolean detailed) {
+    public SimulationResult simulate(int num_years, double x, ArrayList<FlowerSpecies> plant_group, long randomSeed, boolean detailed) {
         Random rand = new Random(randomSeed);
         double totalBees = 0;
         double totalFood = 0;
@@ -30,7 +30,7 @@ public class SimulationLogic {
         x = Math.max( Math.round(x), 10.0 );
 
         for (int year = 1; year <= num_years; year++) {
-            for (Flowerspecies plant : plant_group) {
+            for (FlowerSpecies plant : plant_group) {
                 plant.resetForVegetation();
             }
 
@@ -56,7 +56,7 @@ public class SimulationLogic {
                 f *= (0.95 + rand.nextDouble() * 0.1);
                 f = Math.max(0.0, Math.min(f, 1.0));
 
-                for (Flowerspecies plant : plant_group) {
+                for (FlowerSpecies plant : plant_group) {
                     plant.moisture_threshold(f);
                     plant.bloom_time(h, d);
                 }
@@ -66,7 +66,7 @@ public class SimulationLogic {
                 if (n < 0.0) n = 0.0;
 
                 // pollination
-                for (Flowerspecies plant : plant_group) {
+                for (FlowerSpecies plant : plant_group) {
                     plant.pollination_probability(x, n, d);
                 }
 
@@ -91,7 +91,7 @@ public class SimulationLogic {
             reserve = Math.max(0.0, reserve - winterConsumption);
 
             // Plant resting phase
-            for (Flowerspecies plant : plant_group) {
+            for (FlowerSpecies plant : plant_group) {
                 plant.resting_phase(rand);
             }
 
@@ -141,9 +141,9 @@ public class SimulationLogic {
     /**
      * Calculates the total food supply from all flower species.
      */
-    private double calculate_food_supply(ArrayList<Flowerspecies> plant_group) {
+    private double calculate_food_supply(ArrayList<FlowerSpecies> plant_group) {
         double n = 0.0;
-        for (Flowerspecies f : plant_group) {
+        for (FlowerSpecies f : plant_group) {
             double val = f.foodvalue();
             if (Double.isNaN(val) || val < 0) val = 0.0;
             n += val;

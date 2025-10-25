@@ -33,13 +33,13 @@ public class ObjectGenerator {
      * @param num_group Used for random seed and group size.
      * @return List of generated Flowerspecies objects.
      */
-    public ArrayList<Flowerspecies> generatePlantGroups(int num_group) {
+    public ArrayList<FlowerSpecies> generatePlantGroups(int num_group) {
         //keep the randomness contained, so different people don't have different values
         Random rand = new Random(num_group);
         int initCapacity = 10 + (num_group % 16); // ensure between 10 and 25
 
         //initial capacity shouldn't really matter since its dynamic but what ever performance right?
-        ArrayList<Flowerspecies> plantGroup = new ArrayList<>();
+        ArrayList<FlowerSpecies> plantGroup = new ArrayList<>();
 
         //create individual PlantSpecies objects.
         for (int i = 0; i < initCapacity; i++) {
@@ -47,11 +47,11 @@ public class ObjectGenerator {
             //deals with hardcoded values
             if (i < F.length) {
                 double[] v = F[i];
-                plantGroup.add(new Flowerspecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
             } else {
                 //deals with randomly generated values
                 double[] v = generateValues(rand);
-                plantGroup.add(new Flowerspecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
             }
         }
         return plantGroup;
