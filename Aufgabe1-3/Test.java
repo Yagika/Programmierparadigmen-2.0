@@ -1,4 +1,5 @@
 import Problem1.FlowerSpecies;
+import Problem1.Pollinators.Bee;
 import Problem1.SimulationLogic;
 import Problem1.ObjectGenerator;
 
@@ -49,20 +50,23 @@ public class Test {
              System.out.printf("%n--------  Group %d -------- %n", g);
 
              ArrayList<FlowerSpecies> group = generator.generatePlantGroups(g);
+             
+             // Generate bees here
+             ArrayList<Bee> bees = generator.generateBees();
 
-             Random groupRand = new Random(g * 1234L);
-             double initialBees = 50.0 + groupRand.nextDouble() * 150.0;
-             initialBees = Math.round(initialBees);
+//             Random groupRand = new Random(g * 1234L);
+//             double initialBees = 50.0 + groupRand.nextDouble() * 150.0;
+//             initialBees = Math.round(initialBees);
 
              long seed = g * 1000L;
              boolean detailed = true;
 
              SimulationLogic.SimulationResult result = simulator.simulate(
-                     YEARS, initialBees, group, seed, detailed);
+                     YEARS, bees, group, seed, detailed);
 
              System.out.printf("Group %d results:%n", g);
              System.out.printf("  Years simulated: %d%n", YEARS);
-             System.out.printf("  Initial bees: %.0f%n", initialBees);
+//             System.out.printf("  Initial bees: %.0f%n", initialBees);
              System.out.printf("  Final bees: %.0f%n", result.finalBees);
              System.out.printf("  Average bees: %.0f%n", result.avgBees);
              System.out.printf("  Average food: %.4f%n", result.avgFood);

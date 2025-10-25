@@ -1,5 +1,7 @@
 package Problem1;
 
+import Problem1.Pollinators.Bee;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,13 +17,15 @@ public class SimulationLogic {
     /**
      * Runs the simulation for a given number of years.
      * @param num_years number of simulated years
-     * @param x initial bee population
+     * @param bees list of bee species
      * @param plant_group list of flower species (each run must pass a fresh copy)
      * @param randomSeed seed for weather/randomness (to allow reproducible runs)
      * @param detailed if true - prints daily and yearly intermediate results
      * @return statistics about the simulation (average and final values)
      */
-    public SimulationResult simulate(int num_years, double x, ArrayList<FlowerSpecies> plant_group, long randomSeed, boolean detailed) {
+
+    // TODO: implement simulation of bees
+    public SimulationResult simulate(int num_years, ArrayList<Bee> bees, ArrayList<FlowerSpecies> plant_group, long randomSeed, boolean detailed) {
         Random rand = new Random(randomSeed);
         double totalBees = 0;
         double totalFood = 0;
@@ -109,33 +113,6 @@ public class SimulationLogic {
         double avgFood = totalFood / num_years;
 
         return new SimulationResult(Math.round(x), Math.round(avgBees), avgFood);
-    }
-
-    /**
-     * Calculates the number of bees for the next day.
-     */
-    private double calculate_bees(double x, double n, double reserve) {
-        if (x <= 0.0) return 10.0;
-        double availableFood = n + reserve * 0.01;
-        double demand = x * 0.2;
-        double ratio = demand > 0 ? (availableFood / demand) : 0.0;
-
-        double growthRate;
-        if (ratio >= 1.1) {
-            growthRate = 1.02 + 0.03 * Math.tanh((ratio - 1.0));
-        } else if (ratio >= 0.8) {
-            growthRate = 1.00;
-        } else {
-            growthRate = 0.98 * ratio + 0.6 * 0.1;
-        }
-
-        double newX = x * growthRate;
-
-        if (Double.isNaN(newX) || Double.isInfinite(newX)) newX = 10.0;
-
-        if (newX < 5.0) newX = 5.0;
-
-        return Math.round(newX);
     }
 
     /**

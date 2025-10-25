@@ -1,5 +1,8 @@
 package Problem1;
 
+import Problem1.Pollinators.Bee;
+
+import javax.swing.plaf.basic.BasicDesktopIconUI;
 import java.util.*;
 import java.util.ArrayList;
 
@@ -55,6 +58,18 @@ public class ObjectGenerator {
             }
         }
         return plantGroup;
+    }
+
+    /**
+     * Generates bees of different species
+     */
+    // TODO: implement generation of bees
+    public ArrayList<Bee> generateBees() {
+        ArrayList<Object> bees = new ArrayList<>();
+
+
+
+        return bees;
     }
 
     /**
