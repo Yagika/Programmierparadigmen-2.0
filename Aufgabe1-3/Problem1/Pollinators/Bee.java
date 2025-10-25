@@ -3,8 +3,8 @@ package Problem1.Pollinators;
 // Class to implement bee species
 public class Bee {
 
-    //Not sure how to implement those
-    double population; //Number of bees in the population
+    // Not sure how to implement those
+    double population; // Number of bees in the population
     double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
     double f_lower, f_upper; // Moisture limits for nesting
     double h_lower, h_upper; // Sunlight limits for nesting
