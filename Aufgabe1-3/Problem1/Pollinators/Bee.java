@@ -4,13 +4,13 @@ package Problem1.Pollinators;
 public class Bee {
 
     public double population; // Number of bees of this kind in the population
-    double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
+    public double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
 
-    double x, y; // Coordinates of the bee nest
+    public double x, y; // Coordinates of the bee nest
 
     public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
 
-    //Somehow create flower preferences. Maybe color?
+    //Somehow create flower preferences. Maybe color? Maybe not needed for us
     public double c_lower, c_upper; // Limits of preferred color intensity
 
 

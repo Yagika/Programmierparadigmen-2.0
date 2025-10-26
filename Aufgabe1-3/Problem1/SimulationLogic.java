@@ -25,8 +25,6 @@ public class SimulationLogic {
      * @param detailed if true - prints daily and yearly intermediate results
      * @return statistics about the simulation (average and final values)
      */
-
-    // TODO: implement simulation of bees, etc.
     public SimulationResult simulate(int num_years, ArrayList<Bee> bees, ArrayList<FlowerGroup> flowerGroups, long randomSeed, boolean detailed) {
         Random rand = new Random(randomSeed);
         double totalBees = 0;
@@ -65,12 +63,10 @@ public class SimulationLogic {
                     f = Math.max(0.0, Math.min(f, 1.0));
 
                     // Simulate all flower groups
-                    // TODO: i think pollination probability method has to be modified
                     for (FlowerGroup flowerGroup : flowerGroups) {
                         for (FlowerSpecies flowerSpecies : flowerGroup.speciesList) {
                             flowerSpecies.moisture_threshold(f);
                             flowerSpecies.bloom_time(h, d);
-//                            flowerSpecies.pollination_probability();
                         }
                     }
 
@@ -81,11 +77,10 @@ public class SimulationLogic {
                     }
 
                     // Calculate total number of bees
-                    // TODO: check what to do with this. How useful is this if we have different kinds of bees now?
                     totalBees = calculate_total_bees(bees);
 
                     // pollination
-                    // TODO: check what to do with this
+                    // TODO: Think how to implement pollination based on distance
 //                    for (FlowerSpecies plant : flowerGroup.speciesList) {
 //                        plant.pollination_probability(bees, totalBees, n, d);
 //                    }
@@ -146,6 +141,19 @@ public class SimulationLogic {
         }
         return n;
     }
+
+    /**
+     * Calculate the pollination probability for the group of plants by certain kind of bees based on the distance
+     * between the nest and the flower group
+     * @return
+     */
+    private double groupPollination(FlowerGroup flowerGroup, Bee bee) {
+        double distance = calculate_distance(flowerGroup.x, flowerGroup.y, bee.x, bee.y);
+
+
+        return distance;
+    }
+
 
     /**
      * Calculate total number of bees
