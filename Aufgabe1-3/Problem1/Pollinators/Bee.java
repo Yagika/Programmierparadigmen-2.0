@@ -59,8 +59,8 @@ public class Bee {
 
     // TODO: maybe make it so that the multiplier increases towards the middle of the active period, and decreases afterwards
     public void calculate_multiplier (int current_day) {
-        if (activeFrom <= current_day  && current_day <= activeTo) {this.multiplier = 1.5;}
-        else {this.multiplier = 0.75;}
+        if (activeFrom <= current_day  && current_day <= activeTo) {this.activity = 1.5;}
+        else {this.activity = 0.75;}
     }
 
 }
