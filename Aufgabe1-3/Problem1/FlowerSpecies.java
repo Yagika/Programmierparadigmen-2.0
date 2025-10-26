@@ -11,10 +11,10 @@ import java.util.Random;
  * Handles its own state changes during simulation
  */
 public class FlowerSpecies {
-    private double y; // Growth strength (>=0)
-    private double b = 0; // Bloom amount (0..1)
-    private double s = 0; // Seed quality (0..1)
-    private final double c_lower, c_upper; // Reproduction limits
+    public double y; // Growth strength (>=0)
+    public double b = 0; // Bloom amount (0..1)
+    public double s = 0; // Seed quality (0..1)
+    public final double c_lower, c_upper; // Reproduction limits
     private final double f_lower, f_upper; // Moisture limits (0 < f_lower < f_upper < 1)
     private final double h_lower, h_upper; // Sunlight limits (hours, cumulative)
     private final double q; // Bloom intensity (0 < q < 1/15)
@@ -50,6 +50,7 @@ public class FlowerSpecies {
      * Simulates the resting (winter) phase: y is multiplied by s and by a random
      * factor in [c_lower, c_upper]. Random is passed from outside to control seeding.
      */
+    // Might be moved to FlowerGroup now
     public void resting_phase(Random rand) {
         //parse a number that stays the same, so that everyone gets the same outcome and the data
         //can be recreated.
@@ -127,10 +128,10 @@ public class FlowerSpecies {
     /**
      * Resets the blooming in the beginning of the new year
      */
-    public void resetForVegetation() {
-        this.b = 0.0;
-        this.s = 0.0;
-    }
+//    public void resetForVegetation() {
+//        this.b = 0.0;
+//        this.s = 0.0;
+//    }
 
     @Override
     public String toString() {

@@ -34,15 +34,15 @@ public class ObjectGenerator {
      * Generates a group of flower species.
      *
      * @param num_group Used for random seed and group size.
-     * @return List of generated Flowerspecies objects.
+     * @return FlowerGroup object that represents a collection of flower species with their location coordinates.
      */
-    public ArrayList<FlowerSpecies> generatePlantGroups(int num_group) {
+    public FlowerGroup generateFlowerGroup(int num_group) {
         //keep the randomness contained, so different people don't have different values
         Random rand = new Random(num_group);
         int initCapacity = 10 + (num_group % 16); // ensure between 10 and 25
 
         //initial capacity shouldn't really matter since its dynamic but what ever performance right?
-        ArrayList<FlowerSpecies> plantGroup = new ArrayList<>();
+        ArrayList<FlowerSpecies> flowerSpecies = new ArrayList<>();
 
         //create individual PlantSpecies objects.
         for (int i = 0; i < initCapacity; i++) {
@@ -50,14 +50,18 @@ public class ObjectGenerator {
             //deals with hardcoded values
             if (i < F.length) {
                 double[] v = F[i];
-                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
+                flowerSpecies.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
             } else {
                 //deals with randomly generated values
                 double[] v = generateFlowerValues(rand);
-                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
+                flowerSpecies.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
             }
         }
-        return plantGroup;
+
+        double x = rand.nextDouble() * 1000;
+        double y = rand.nextDouble() * 1000;
+
+        return new FlowerGroup(flowerSpecies,x, y);
     }
 
     /**
@@ -71,7 +75,7 @@ public class ObjectGenerator {
 
         for (int i = 0; i < num_bees; i++) {
             double[] v = generateBeeValues(rand);
-            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9], v[10]));
+            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6]));
         }
 
         return bees;

@@ -3,29 +3,23 @@ package Problem1.Pollinators;
 // Class to implement bee species
 public class Bee {
 
-    // Not sure how to implement those
     public double population; // Number of bees of this kind in the population
     double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
-    double f_lower, f_upper; // Moisture limits for nesting
-    double h_lower, h_upper; // Sunlight limits for nesting
-    double d_lower, d_upper; // Distance limits from food for nesting
+
+    double x, y; // Coordinates of the bee nest
 
     public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
-    //Somehow create flower preferences?
+
+    //Somehow create flower preferences. Maybe color?
     public double c_lower, c_upper; // Limits of preferred color intensity
 
 
-    public Bee(double population, double activeFrom, double activeTo, double f_lower, double f_upper, double h_lower, double h_upper,
-               double d_lower, double d_upper, double c_lower, double c_upper) {
+    public Bee(double population, double activeFrom, double activeTo, double x, double y, double c_lower, double c_upper) {
         this.population = population;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
-        this.f_lower = f_lower;
-        this.f_upper = f_upper;
-        this.h_lower = h_lower;
-        this.h_upper = h_upper;
-        this.d_lower = d_lower;
-        this.d_upper = d_upper;
+        this.x = x;
+        this.y = y;
         this.c_lower = c_lower;
         this.c_upper = c_upper;
     }
