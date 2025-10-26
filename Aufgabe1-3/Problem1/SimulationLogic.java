@@ -57,6 +57,7 @@ public class SimulationLogic {
             // Vegetation period: 240 days
             for (int day = 1; day <= VEGETATION_DAYS; day++) {
                 double d = rand.nextGaussian() * 12.0; // today's sunshine 0..12
+                // TODO: maybe here add temperature simulation. Designate this as a procedural style block?
                 h += d;
 
                 f *= (0.95 + rand.nextGaussian() * 0.1);
