@@ -1,5 +1,8 @@
 package Problem1;
 
+import Problem1.Pollinators.Bee;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -17,11 +20,13 @@ public class FlowerSpecies {
     private final double q; // Bloom intensity (0 < q < 1/15)
     private final double p; // Pollination probability (0 < p < 1/(h_upper - h_lower))
 
+    public final double brightness; // How bright the color of the plant is. This will influence which bees prefer this plant
+
     /**
      * Constructor initializes all biological parameters of a flower species.
      */
     public FlowerSpecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
-                         double h_lower, double h_upper, double q, double p) {
+                         double h_lower, double h_upper, double q, double p, double brightness) {
         this.y = Math.max(0.0, y);
         this.c_lower = c_lower;
         this.c_upper = c_upper;
@@ -31,6 +36,7 @@ public class FlowerSpecies {
         this.h_upper = h_upper;
         this.q = q;
         this.p = p;
+        this.brightness = brightness;
     }
 
     /**
@@ -88,23 +94,36 @@ public class FlowerSpecies {
     /**
      * Increases seed quality (s) based on pollination probability and bee activity.
      *
-     * @param bee_population current bee population x
+     * @param bees list of bees that can pollinate this plant
      * @param total_foodvalue n = sum yi*bi across all species
      * @param d today's sunshine (0..12)
      */
-    public void pollination_probability(double bee_population, double total_foodvalue, double d) {
+    // TODO: Figure out what to do with this. Idea: pollination is increased because of some condition (e.g. this type of bees
+    //  likes this plant, bees are more active at this time of year, etc.). Maybe do it in a separate method
+    public void pollination_probability(ArrayList<Bee> bees, double totalBees, double total_foodvalue, double d) {
         if (total_foodvalue <= 0.0) {
             // no flowers in bloom -> no seed increase
             return;
         }
-        if (bee_population >= total_foodvalue) {
-            this.s += this.p * this.b * (d + 1.0);
-        } else {
-            this.s += this.p * this.b * (d + 1.0) * (bee_population / total_foodvalue);
+
+        double preference; // preference multiplier for bees that prefer this plant based on color intensity
+
+        for (Bee bee : bees) {
+            if (bee.c_lower <= this.brightness && this.brightness <= bee.c_upper) {
+               preference = 1.25;
+            }
+            else {preference = 0.75;}
+
+            if (totalBees >= total_foodvalue) {
+                this.s += this.p * this.b * (d + 1.0) * bee.activity * preference / 5;
+            } else {
+                this.s += this.p * this.b * (d + 1.0) * (totalBees / total_foodvalue) * bee.activity * preference / 5;
+            }
+            if (this.s > 1.0) this.s = 1.0;
+            if (this.s < 0.0) this.s = 0.0;
         }
-        if (this.s > 1.0) this.s = 1.0;
-        if (this.s < 0.0) this.s = 0.0;
     }
+
     /**
      * Resets the blooming in the beginning of the new year
      */
@@ -123,7 +142,7 @@ public class FlowerSpecies {
      */
     public FlowerSpecies copy() {
         FlowerSpecies f = new FlowerSpecies(this.y, this.c_lower, this.c_upper, this.f_lower, this.f_upper,
-                this.h_lower, this.h_upper, this.q, this.p);
+                this.h_lower, this.h_upper, this.q, this.p, this.brightness);
         f.b = this.b;
         f.s = this.s;
         return f;

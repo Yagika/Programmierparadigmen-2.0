@@ -24,11 +24,11 @@ bare minimum and have about 12-15 per group.
 public class ObjectGenerator {
 
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
-    //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p
-    private final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5},
-            {7.0, 2.0, 11.0, 0.2, 0.8, 37, 410, 0.060, 0.7},
-            {11.0, 2.0, 9.0, 0.3, 0.9, 60, 450, 0.022, 0.5},
-            {9.0, 3.4, 15.0, 0.1, 0.6, 55, 390, 0.0198, 0.5}};
+    //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p  brightness
+    private final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5, 1.0},
+            {7.0, 2.0, 11.0, 0.2, 0.8, 37, 410, 0.060, 0.7, 1.5},
+            {11.0, 2.0, 9.0, 0.3, 0.9, 60, 450, 0.022, 0.5, 2.0},
+            {9.0, 3.4, 15.0, 0.1, 0.6, 55, 390, 0.0198, 0.5, 2.0}};
 
     /**
      * Generates a group of flower species.
@@ -50,11 +50,11 @@ public class ObjectGenerator {
             //deals with hardcoded values
             if (i < F.length) {
                 double[] v = F[i];
-                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
             } else {
                 //deals with randomly generated values
                 double[] v = generateFlowerValues(rand);
-                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+                plantGroup.add(new FlowerSpecies(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9]));
             }
         }
         return plantGroup;
@@ -71,7 +71,7 @@ public class ObjectGenerator {
 
         for (int i = 0; i < num_bees; i++) {
             double[] v = generateBeeValues(rand);
-            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]));
+            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9], v[10]));
         }
 
         return bees;
@@ -113,6 +113,8 @@ public class ObjectGenerator {
         if (denom < 1.0) denom = 1.0;
         values[8] = rand.nextGaussian() * (1.0 / denom);
 
+        values[9] = rand.nextGaussian();
+
         return values;
     }
 
@@ -138,6 +140,10 @@ public class ObjectGenerator {
         // Distance limits between nest and food for nesting. Not sure how it's supposed to work
         values[7] = 5.0 + rand.nextGaussian() * 100.0;
         values[8] = values[7] + rand.nextGaussian() * 300.0;
+
+        // Intensity limits for preferred colors. Leave it nextDouble for now
+        values[9] = rand.nextDouble();
+        values[10] = rand.nextDouble();
 
         return values;
     }

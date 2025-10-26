@@ -25,6 +25,7 @@ public class SimulationLogic {
      */
 
     // TODO: implement simulation of bees
+    // TODO: somehow deal with distances and nests. Maybe create a map where we place flowers and where bees can create nests?
     public SimulationResult simulate(int num_years, ArrayList<Bee> bees, ArrayList<FlowerSpecies> plant_group, long randomSeed, boolean detailed) {
         Random rand = new Random(randomSeed);
         double totalBees = 0;
@@ -55,10 +56,10 @@ public class SimulationLogic {
 
             // Vegetation period: 240 days
             for (int day = 1; day <= VEGETATION_DAYS; day++) {
-                double d = rand.nextDouble() * 12.0; // today's sunshine 0..12
+                double d = rand.nextGaussian() * 12.0; // today's sunshine 0..12
                 h += d;
 
-                f *= (0.95 + rand.nextDouble() * 0.1);
+                f *= (0.95 + rand.nextGaussian() * 0.1);
                 f = Math.max(0.0, Math.min(f, 1.0));
 
                 for (FlowerSpecies plant : plant_group) {
@@ -66,8 +67,13 @@ public class SimulationLogic {
                     plant.bloom_time(h, d);
                 }
 
+                for (Bee bee : bees) {
+                    bee.calculate_population(h, f, reserve);
+                    bee.calculate_multiplier(day);
+                }
+
                 // Calculate total number of bees
-                // TODO: check what to do with this. Now pollination probability depends on many different kinds of bees
+                // TODO: check what to do with this. How useful is this if we have different kinds of bees now?
                 totalBees = calculate_total_bees(bees);
 
                 n = calculate_food_supply(plant_group);
@@ -77,7 +83,7 @@ public class SimulationLogic {
                 // pollination
                 // TODO: check what to do with this
                 for (FlowerSpecies plant : plant_group) {
-                    plant.pollination_probability(totalBees, n, d);
+                    plant.pollination_probability(bees, totalBees, n, d);
                 }
 
                 reserve += n * 0.3;
@@ -147,7 +153,6 @@ public class SimulationLogic {
      * @param bees Array list of bees
      * @return total number of bees of all kinds
      */
-    // TODO: This probably should be improved as different kinds of bees should interact differently with flowers
     private double calculate_total_bees(ArrayList<Bee> bees) {
         double totalBees = 0.0;
 
