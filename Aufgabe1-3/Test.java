@@ -76,7 +76,7 @@ public class Test {
         Simulation simulator = new Simulation();
 
         final int GROUPS = 5;
-        final int YEARS = 3;
+        final int YEARS = 10;
         final int NUM_BEES = 3;
 
         System.out.println("=== Bee & Flower Simulation (Abgabe 2) ===");

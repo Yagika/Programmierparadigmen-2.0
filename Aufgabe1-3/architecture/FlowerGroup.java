@@ -100,7 +100,6 @@ public class FlowerGroup {
         }
     }
 
-
     /**
      * Applies winter resting phase to all species in the group.
      */

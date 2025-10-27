@@ -53,7 +53,7 @@ public class FlowerSpecies {
      * Simulates the resting (winter) phase: y is multiplied by s and by a random
      * factor in [c_lower, c_upper]. Random is passed from outside to control seeding.
      */
-    // Might be moved to FlowerGroup now
+    @Deprecated
     public void resting_phase(Random rand) {
         //parse a number that stays the same, so that everyone gets the same outcome and the data
         //can be recreated.
@@ -91,12 +91,7 @@ public class FlowerSpecies {
             this.b -= (q * (1.5 + 0.1 * d));
             if (this.b < 0.0) this.b = 0.0;
         }
-        // if h < h_lower -> no change (still 0 until threshold)
     }
-
-    // this method should be called after collecting the total_foodvalue = the sum of all individual food values
-    // increases the quality of the seed production of the flowers
-    // d = sunshine-time, its a random number between 0-12
 
     /**
      * Increases seed quality (s) based on pollination probability and bee activity.
@@ -105,8 +100,6 @@ public class FlowerSpecies {
      * @param total_foodvalue n = sum yi*bi across all species
      * @param d               today's sunshine (0..12)
      */
-    // TODO: Figure out what to do with this. Idea: pollination is increased because of some condition (e.g. this type of bees
-    //  likes this plant, bees are more active at this time of year, etc.). Maybe do it in a separate method
     @Deprecated
     public void pollination_probability(ArrayList<Bee> bees, double totalBees, double total_foodvalue, double d) {
         if (total_foodvalue <= 0.0) {
@@ -132,7 +125,6 @@ public class FlowerSpecies {
             if (this.s < 0.0) this.s = 0.0;
         }
     }
-
 
     /**
      * Copy constructor to create new object with same parameters.
