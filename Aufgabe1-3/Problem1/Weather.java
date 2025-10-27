@@ -88,7 +88,7 @@ public class Weather {
     }
 
 
-
+    //calculates temperature based on current weather event, and on previous temperature.
     public void NextTemperature(int day, double random){
         double tempChange = random * 0.9 + (previous_temp);
 

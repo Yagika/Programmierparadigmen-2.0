@@ -12,6 +12,8 @@ public class FlowerGroup {
     double p; // number of bees that will pollinate this plant
     double n; // Total food supply from this group
 
+
+
     public FlowerGroup(ArrayList<FlowerSpecies> speciesList, double x, double y) {
         this.speciesList = speciesList;
         this.x = x;
@@ -23,7 +25,10 @@ public class FlowerGroup {
      * @param speciesList
      * @param bees
      */
-    public void pollinationProbability (ArrayList<FlowerSpecies> speciesList, ArrayList<Bee> bees) {}
+    public void pollinationProbability (ArrayList<FlowerSpecies> speciesList, ArrayList<Bee> bees) {
+
+
+    }
 
     /**
      * Resets the blooming in the beginning of the new year

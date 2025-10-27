@@ -75,7 +75,7 @@ public class ObjectGenerator {
 
         for (int i = 0; i < num_bees; i++) {
             double[] v = generateBeeValues(rand);
-            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6]));
+            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]));
         }
 
         return bees;
@@ -145,8 +145,10 @@ public class ObjectGenerator {
         values[7] = 5.0 + rand.nextGaussian() * 100.0;
         values[8] = values[7] + rand.nextGaussian() * 300.0;
 
+        //rand.nextDouble() * (max - min) + min;
+
         // Intensity limits for preferred colors. Leave it nextDouble for now
-        values[9] = rand.nextDouble();
+        values[9] = rand.nextDouble() * (1.0 - 0.5) + 0.5; //this is now effectiveness. between 0.5-1.0
         values[10] = rand.nextDouble();
 
         return values;

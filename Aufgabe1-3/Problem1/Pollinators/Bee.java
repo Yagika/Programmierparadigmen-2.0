@@ -6,19 +6,20 @@ import Problem1.Weather;
 public class Bee {
 
 
-    public String name; //a way to
+    public String name; //a way to differentiate between bees in console.
     public double population; // Number of bees of this kind in the population
     public double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
 
     public double x, y; // Coordinates of the bee nest
 
     public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
+    public double effectiveness; //some bees are more effective than others.
 
     //Somehow create flower preferences. Maybe color? Maybe not needed for us
     public double c_lower, c_upper; // Limits of preferred color intensity
 
 
-    public Bee(double population, double activeFrom, double activeTo, double x, double y, double c_lower, double c_upper) {
+    public Bee(double population, double activeFrom, double activeTo, double x, double y, double c_lower, double c_upper, double effectiveness) {
         this.population = population;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
@@ -26,6 +27,7 @@ public class Bee {
         this.y = y;
         this.c_lower = c_lower;
         this.c_upper = c_upper;
+        this.effectiveness = effectiveness;
     }
 
 
