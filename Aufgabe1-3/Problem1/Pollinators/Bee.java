@@ -12,6 +12,7 @@ public class Bee {
 
     public double x, y; // Coordinates of the bee nest
 
+
     public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
     public double effectiveness; //some bees are more effective than others.
 
@@ -19,7 +20,8 @@ public class Bee {
     public double c_lower, c_upper; // Limits of preferred color intensity
 
 
-    public Bee(double population, double activeFrom, double activeTo, double x, double y, double c_lower, double c_upper, double effectiveness) {
+    public Bee(String name, double population, double activeFrom, double activeTo, double x, double y, double c_lower, double c_upper, double effectiveness) {
+        this.name = name;
         this.population = population;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
@@ -77,11 +79,11 @@ public class Bee {
     public void calculate_activity(int day, Weather weather){
 
         switch(weather.event) {
-            case WEATHER_SUNNY -> activity = 1.0;
-            case WEATHER_PARTLY_CLOUDY -> activity = 0.8;
-            case WEATHER_CLOUDY -> activity = 0.7;
-            case WEATHER_RAINY -> activity = 0.5;
-            case WEATHER_STORMY -> activity = 0.2;
+            case WEATHER_SUNNY -> activity *= 1.0;
+            case WEATHER_PARTLY_CLOUDY -> activity *= 0.8;
+            case WEATHER_CLOUDY -> activity *= 0.7;
+            case WEATHER_RAINY -> activity *= 0.5;
+            case WEATHER_STORMY -> activity *= 0.2;
         }
 
     }

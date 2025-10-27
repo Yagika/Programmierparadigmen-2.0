@@ -17,6 +17,8 @@ public class TESTING {
         Weather weather = new Weather(10.1, 30, Weather.WeatherEvents.WEATHER_SUNNY);
         Random rand = new Random(42);
 
+
+
         for(int i = 0; i < 100; i++){
             weather.NextTemperature(i, rand.nextGaussian(0, 2.0)); //std dev of 2.0 C
             weather.NextWeatherEvent(i, rand.nextDouble());

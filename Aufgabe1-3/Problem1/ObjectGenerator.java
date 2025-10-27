@@ -23,6 +23,8 @@ bare minimum and have about 12-15 per group.
  */
 public class ObjectGenerator {
 
+
+    public int MAX_DISTANCE = 2000;
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
     //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p  brightness
     private final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5, 1.0},
@@ -58,8 +60,9 @@ public class ObjectGenerator {
             }
         }
 
-        double x = rand.nextDouble() * 1000;
-        double y = rand.nextDouble() * 1000;
+        //distance seems to be between 0 and 1000
+        double x = rand.nextDouble() * MAX_DISTANCE;
+        double y = rand.nextDouble() * MAX_DISTANCE;
 
         return new FlowerGroup(flowerSpecies,x, y);
     }
@@ -71,11 +74,13 @@ public class ObjectGenerator {
     public ArrayList<Bee> generateBees(int num_bees) {
         Random rand = new Random(num_bees);
 
+        String name = "Bee Type: ";
+
         ArrayList<Bee> bees = new ArrayList<>();
 
         for (int i = 0; i < num_bees; i++) {
             double[] v = generateBeeValues(rand);
-            bees.add(new Bee(v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]));
+            bees.add(new Bee(name+""+i, v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]));
         }
 
         return bees;
@@ -89,7 +94,7 @@ public class ObjectGenerator {
     // TODO: Check how to generate random values (e.g. using Gaussian distribution)
     private double[] generateFlowerValues(Random rand) {
         //set array with the size of the hardcoded array, if changes are needed
-        double[] values = new double[9];
+        double[] values = new double[10];
 
         //rand.nextDouble() * (max - min) + min;
 
@@ -124,7 +129,7 @@ public class ObjectGenerator {
 
     // TODO: Find out how to generate values here
     private double[] generateBeeValues(Random rand) {
-        double[] values = new double[9];
+        double[] values = new double[10];
 
         // Population of bees
         values[0] = 20.0 + rand.nextGaussian() * 75.0;
@@ -149,7 +154,7 @@ public class ObjectGenerator {
 
         // Intensity limits for preferred colors. Leave it nextDouble for now
         values[9] = rand.nextDouble() * (1.0 - 0.5) + 0.5; //this is now effectiveness. between 0.5-1.0
-        values[10] = rand.nextDouble();
+        //values[10] = rand.nextDouble();
 
         return values;
     }
