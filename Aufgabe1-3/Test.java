@@ -72,20 +72,19 @@ import java.util.ArrayList;
 public class Test {
 
     public static void main(String[] args) {
-        ObjectGenerator generator = new ObjectGenerator();
         Simulation simulator = new Simulation();
 
         final int GROUPS = 5;
-        final int YEARS = 10;
+        final int YEARS = 3;
         final int NUM_BEES = 3;
 
         System.out.println("=== Bee & Flower Simulation (Abgabe 2) ===");
 
-        ArrayList<Bee> bees = generator.generateWildBees(NUM_BEES);
+        ArrayList<Bee> bees = ObjectGenerator.generateWildBees(NUM_BEES);
 
         ArrayList<FlowerGroup> flowerGroups = new ArrayList<>();
         for (int g = 1; g <= GROUPS; g++) {
-            flowerGroups.add(generator.generateFlowerGroup(g));
+            flowerGroups.add(ObjectGenerator.generateFlowerGroup(g));
         }
 
         long seed = 1000L;

@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * - Wild bees and honeybees with realistic parameter distributions.
  * <p>
  * STYLE: procedural paradigm – provides utility functions independent of state.
+ * We don't create an instance of ObjectGenerator, rather we call the methods directly from the class
  */
 public class ObjectGenerator {
 
-
-    public int MAX_DISTANCE = 2000;
+    public static int MAX_DISTANCE = 2000;
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
     //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p  brightness
-    private final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5, 1.0},
+    private static final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5, 1.0},
             {7.0, 2.0, 11.0, 0.2, 0.8, 37, 410, 0.060, 0.7, 1.5},
             {11.0, 2.0, 9.0, 0.3, 0.9, 60, 450, 0.022, 0.5, 2.0},
             {9.0, 3.4, 15.0, 0.1, 0.6, 55, 390, 0.0198, 0.5, 2.0}};
@@ -30,7 +30,7 @@ public class ObjectGenerator {
      * @param num_group Used for random seed and group size.
      * @return FlowerGroup object that represents a collection of flower species with their location coordinates.
      */
-    public FlowerGroup generateFlowerGroup(int num_group) {
+    public static FlowerGroup generateFlowerGroup(int num_group) {
         //keep the randomness contained, so different people don't have different values
         Random rand = new Random(num_group);
         int initCapacity = 10 + (num_group % 16); // ensure between 10 and 25
@@ -62,7 +62,7 @@ public class ObjectGenerator {
     /**
      * Generates a list of wild bee species.
      */
-    public ArrayList<Bee> generateWildBees(int num) {
+    public static ArrayList<Bee> generateWildBees(int num) {
         Random rand = new Random(7777 + num);
         ArrayList<Bee> bees = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -75,7 +75,7 @@ public class ObjectGenerator {
     /**
      * Generates a list of honeybee populations.
      */
-    public ArrayList<Honeybee> generateHoneyBees(int num) {
+    public static ArrayList<Honeybee> generateHoneyBees(int num) {
         Random rand = new Random(8888 + num);
         ArrayList<Honeybee> bees = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -90,7 +90,7 @@ public class ObjectGenerator {
     /**
      * Returns a bounded Gaussian random number within [min, max].
      */
-    private double boundedGaussian(Random r, double mean, double std, double min, double max) {
+    private static double boundedGaussian(Random r, double mean, double std, double min, double max) {
         double val = mean + r.nextGaussian() * std;
         if (val < min) val = min + r.nextDouble() * (mean - min);
         if (val > max) val = max - r.nextDouble() * (max - mean);
@@ -100,7 +100,7 @@ public class ObjectGenerator {
     /**
      * Generates random flower parameters for variety in the simulation.
      */
-    private double[] generateFlowerValues(Random rand) {
+    private static double[] generateFlowerValues(Random rand) {
         double[] v = new double[10];
         v[0] = boundedGaussian(rand, 9.0, 3.0, 3.0, 20.0);        // y
         v[1] = boundedGaussian(rand, 2.0, 0.8, 1.0, 6.0);         // c_lower
@@ -119,7 +119,7 @@ public class ObjectGenerator {
     /**
      * Generates random parameter sets for bee species.
      */
-    private double[] generateBeeValues(Random rand) {
+    private static double[] generateBeeValues(Random rand) {
         double[] v = new double[8];
         v[0] = boundedGaussian(rand, 80.0, 35.0, 20.0, 200.0); // population
         double a1 = boundedGaussian(rand, 40.0, 25.0, 0.0, 180.0);
