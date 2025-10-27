@@ -1,6 +1,6 @@
-package Problem1;
+package architecture;
 
-import Problem1.Pollinators.Bee;
+import architecture.Pollinators.Bee;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,6 +9,8 @@ import java.util.Random;
 /**
  * Class to represent a flower species with their parameters.
  * Handles its own state changes during simulation
+ * <p>
+ * STYLE: object-oriented – each species maintains its own state and transitions.
  */
 public class FlowerSpecies {
     public double y; // Growth strength (>=0)
@@ -19,11 +21,10 @@ public class FlowerSpecies {
     private final double h_lower, h_upper; // Sunlight limits (hours, cumulative)
     private final double q; // Bloom intensity (0 < q < 1/15)
     private final double p; // Pollination probability (0 < p < 1/(h_upper - h_lower))
-
-    public final double brightness; // How bright the color of the plant is. This will influence which bees prefer this plant
+    public final double brightness; // Flower brightness (affects bee preference)
 
     /**
-     * Constructor initializes all biological parameters of a flower species.
+     * Constructs a plant species with given biological parameters.
      */
     public FlowerSpecies(double y, double c_lower, double c_upper, double f_lower, double f_upper,
                          double h_lower, double h_upper, double q, double p, double brightness) {
@@ -41,6 +42,8 @@ public class FlowerSpecies {
 
     /**
      * Calculates food value provided by this flower species (y * b).
+     *
+     * @return today's food contribution
      */
     public double foodvalue() { //Nahrungsangebot (food supply) n SUM_i(y_i * b_i), in here its the sum of the individual plant,
         return y * b;           //at the end it should be summed up (n for bee population calculation!)
@@ -54,8 +57,8 @@ public class FlowerSpecies {
     public void resting_phase(Random rand) {
         //parse a number that stays the same, so that everyone gets the same outcome and the data
         //can be recreated.
-        double randomdouble = rand.nextDouble() * (c_upper - c_lower) + c_lower;
-        this.y = this.y * this.s * randomdouble;
+        double randomFactor = rand.nextDouble() * (c_upper - c_lower) + c_lower;
+        this.y = this.y * this.s * randomFactor;
         if (this.y < 0) this.y = 0;
     }
 
@@ -78,11 +81,14 @@ public class FlowerSpecies {
      * Changes blooming state based on sunlight amount.
      */
     public void bloom_time(double h, double d) { //changes the bloom-state of the given flower based on sunlight and suntime
-        if (this.h_lower <= h && h < this.h_upper) {
+        double period = Math.max(1.0, this.h_upper);
+        double phase = h % period;
+        boolean inWindow = (this.h_lower <= phase && phase < this.h_upper);
+        if (inWindow) {
             this.b += (q * (d + 3.0));
             if (this.b > 1.0) this.b = 1.0;
-        } else if (this.h_upper <= h) {
-            this.b -= (q * (d + 3.0));
+        } else {
+            this.b -= (q * (1.5 + 0.1 * d));
             if (this.b < 0.0) this.b = 0.0;
         }
         // if h < h_lower -> no change (still 0 until threshold)
@@ -95,12 +101,13 @@ public class FlowerSpecies {
     /**
      * Increases seed quality (s) based on pollination probability and bee activity.
      *
-     * @param bees list of bees that can pollinate this plant
+     * @param bees            list of bees that can pollinate this plant
      * @param total_foodvalue n = sum yi*bi across all species
-     * @param d today's sunshine (0..12)
+     * @param d               today's sunshine (0..12)
      */
     // TODO: Figure out what to do with this. Idea: pollination is increased because of some condition (e.g. this type of bees
     //  likes this plant, bees are more active at this time of year, etc.). Maybe do it in a separate method
+    @Deprecated
     public void pollination_probability(ArrayList<Bee> bees, double totalBees, double total_foodvalue, double d) {
         if (total_foodvalue <= 0.0) {
             // no flowers in bloom -> no seed increase
@@ -111,9 +118,10 @@ public class FlowerSpecies {
 
         for (Bee bee : bees) {
             if (bee.c_lower <= this.brightness && this.brightness <= bee.c_upper) {
-               preference = 1.25;
+                preference = 1.25;
+            } else {
+                preference = 0.75;
             }
-            else {preference = 0.75;}
 
             if (totalBees >= total_foodvalue) {
                 this.s += this.p * this.b * (d + 1.0) * bee.activity * preference / 5;
@@ -125,19 +133,7 @@ public class FlowerSpecies {
         }
     }
 
-    /**
-     * Resets the blooming in the beginning of the new year
-     */
-//    public void resetForVegetation() {
-//        this.b = 0.0;
-//        this.s = 0.0;
-//    }
 
-    @Override
-    public String toString() {
-        return String.format("Flower [y=%.2f, b=%.2f, s=%.2f, f=(%.2f-%.2f), h=(%.1f-%.1f)]",
-                y, b, s, f_lower, f_upper, h_lower, h_upper);
-    }
     /**
      * Copy constructor to create new object with same parameters.
      */
@@ -149,9 +145,23 @@ public class FlowerSpecies {
         return f;
     }
 
-    public double getY() { return y; }
-    public double getB() { return b; }
-    public double getS() { return s; }
+    @Override
+    public String toString() {
+        return String.format("Flower [y=%.2f, b=%.2f, s=%.2f, f=(%.2f-%.2f), h=(%.1f-%.1f)]",
+                y, b, s, f_lower, f_upper, h_lower, h_upper);
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public double getS() {
+        return s;
+    }
 }
 
 
