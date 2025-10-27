@@ -1,8 +1,12 @@
 package Problem1.Pollinators;
 
+import Problem1.Weather;
+
 // Class to implement bee species
 public class Bee {
 
+
+    public String name; //a way to
     public double population; // Number of bees of this kind in the population
     public double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
 
@@ -22,6 +26,15 @@ public class Bee {
         this.y = y;
         this.c_lower = c_lower;
         this.c_upper = c_upper;
+    }
+
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     /**
@@ -55,6 +68,20 @@ public class Bee {
     public void calculate_multiplier (int current_day) {
         if (activeFrom <= current_day  && current_day <= activeTo) {this.activity = 1.5;}
         else {this.activity = 0.75;}
+    }
+
+    //calculate the activity of bees depending on weather condition.
+    //they work less the colder it is, simplified in weather events.
+    public void calculate_activity(int day, Weather weather){
+
+        switch(weather.event) {
+            case WEATHER_SUNNY -> activity = 1.0;
+            case WEATHER_PARTLY_CLOUDY -> activity = 0.8;
+            case WEATHER_CLOUDY -> activity = 0.7;
+            case WEATHER_RAINY -> activity = 0.5;
+            case WEATHER_STORMY -> activity = 0.2;
+        }
+
     }
 
 }
