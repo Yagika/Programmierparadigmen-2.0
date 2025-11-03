@@ -14,7 +14,12 @@ import java.util.ArrayList;
  * - Wild bees and honeybees with realistic parameter distributions.
  * <p>
  * STYLE: procedural paradigm – provides utility functions independent of state.
- * We don't create an instance of ObjectGenerator, rather we call the methods directly from the class
+ *
+ * GOOD: We wanted to create a separate file that handles instantiation of objects
+ * with values that we want to simulate. This led to the following benefits:
+ * Control flow is easily traceable, names of methods and variables are clear, methods inside the module are
+ * closely related and perform small number of related activities. Cohesion is high. Coupling (to FlowerGroup and
+ * different kinds of pollinators) is low.
  */
 public class ObjectGenerator {
 

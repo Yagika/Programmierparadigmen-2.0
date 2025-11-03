@@ -24,16 +24,12 @@ public class Weather {
         WEATHER_STORMY,
     }
 
-    //CONSTRUCTOR
     public Weather(double temperature, double humidity, WeatherEvents event) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.previous_temp = temperature;
         this.event = event;
     }
-
-    //gets the weather for the next day based on the current day.
-    //random MUST be between 0.0 and 1.0, so use random.nextDouble()
 
     /**
      * Determines the next weather event based on random chance
@@ -43,21 +39,21 @@ public class Weather {
 
         switch (event) {
             case WEATHER_SUNNY:
-                if (random < 0.7) break; //KEEP IT SUNNY
+                if (random < 0.7) break; // KEEP IT SUNNY
                 else if (random < 0.9) event = WeatherEvents.WEATHER_PARTLY_CLOUDY;
                 else event = WeatherEvents.WEATHER_CLOUDY;
                 break;
 
             case WEATHER_PARTLY_CLOUDY:
                 if (random < 0.3) event = WeatherEvents.WEATHER_SUNNY;
-                else if (random < 0.6) break; //KEEP IT PARTLY_CLOUDY
+                else if (random < 0.6) break; // KEEP IT PARTLY_CLOUDY
                 else event = WeatherEvents.WEATHER_CLOUDY;
                 break;
 
             case WEATHER_CLOUDY:
-                if (random < 0.1) event = WeatherEvents.WEATHER_SUNNY; //10% chance SUNNY
-                else if (random < 0.2) event = WeatherEvents.WEATHER_PARTLY_CLOUDY; //10% chance PARTLY CLOUDY
-                else if (random < 0.5) break; //KEEP IT CLOUDY 30% KEEP THE SAME
+                if (random < 0.1) event = WeatherEvents.WEATHER_SUNNY; // 10% chance SUNNY
+                else if (random < 0.2) event = WeatherEvents.WEATHER_PARTLY_CLOUDY; // 10% chance PARTLY CLOUDY
+                else if (random < 0.5) break; // KEEP IT CLOUDY 30% KEEP THE SAME
                 else if (random < 0.8) event = WeatherEvents.WEATHER_RAINY;
                 else event = WeatherEvents.WEATHER_STORMY;
                 break;
@@ -66,7 +62,7 @@ public class Weather {
                 if (random < 0.1) event = WeatherEvents.WEATHER_SUNNY;
                 else if (random > 0.1 && random < 0.2) event = WeatherEvents.WEATHER_PARTLY_CLOUDY;
                 else if (random < 0.4) event = WeatherEvents.WEATHER_CLOUDY;
-                else if (random < 0.8) break; //KEEP IT RAINY
+                else if (random < 0.8) break; // KEEP IT RAINY
                 else event = WeatherEvents.WEATHER_STORMY;
                 break;
 
@@ -74,7 +70,7 @@ public class Weather {
                 if (random < 0.2) event = WeatherEvents.WEATHER_PARTLY_CLOUDY;
                 else if (random < 0.3) event = WeatherEvents.WEATHER_CLOUDY;
                 else if (random < 0.8) event = WeatherEvents.WEATHER_RAINY;
-                else break; //KEEP IT STORMY
+                else break; // KEEP IT STORMY
                 break;
 
             default:
