@@ -61,6 +61,48 @@ import java.util.ArrayList;
  * <p>
  * This project simulates an ecological system of bees and flower species over several years,
  * focusing on population dynamics, blooming behavior, and environmental influence.
+ * <p>
+ * ### Assignment 3 ###
+ * <p>
+ * Team Collaboration Overview:
+ * Each work package lists the main responsible person.
+ * Other team members provided assistance, integration, and testing.
+ * <p>
+ * - Project structure: Dominik, Yana, and Aleksandr
+ * - architecture:
+ * ----- pollinators:
+ * ---------- Bee (abstract base): Dominik
+ * ---------- HoneyBee: Aleksandr
+ * ---------- WildBee: Yana
+ * ---------- BumbleBee: Yana
+ * ---------- Pollinator (interface): Dominik
+ * ----- FlowerSpecies: Dominik
+ * ----- FlowerGroup: Aleksandr
+ * ----- ObjectGenerator: Dominik & Yana
+ * ----- Weather: Aleksandr
+ * ----- FunctionalStats (new functional part): Yana
+ * ----- ParallelSimulation (new parallel part): Aleksandr
+ * - simulation:
+ * ----- Simulation: Yana & Aleksandr
+ * - testArchitecture:
+ * ----- TestWeather: Dominik
+ * - Test: Yana & Dominik
+ * - Documentation and analysis: Yana
+ * <p>
+ * Additional Contributions:
+ * - Code optimization and debugging: Dominik
+ * - Design-by-Contract annotations and paradigm comments: Yana
+ * - Review, testing, and output formatting: Aleksandr
+ * <p>
+ * Improvements include:
+ * - Multiple bee species (Honeybee, WildBee, BumbleBee)
+ * - Abstracted base class for pollinators
+ * - Added functional and parallel programming modules
+ * - Added Design-by-Contract assertions and GOOD/BAD/NOTE/ERROR markers
+ * - Enhanced structure separation and paradigm documentation
+ * <p>
+ * The simulation models ecosystem dynamics across multiple years,
+ * combining object-oriented, procedural, functional, and parallel paradigms.
  */
 
 /**
@@ -98,5 +140,8 @@ public class Test {
         System.out.printf("Final bees: %.0f%n", result.finalBees);
         System.out.printf("Avg bees: %.0f%n", result.avgBees);
         System.out.printf("Avg food: %.4f%n", result.avgFood);
+
+        System.out.println("\n--- Functional & Parallel Extensions ---");
+        simulator.runFunctionalAndParallelExamples(bees);
     }
 }

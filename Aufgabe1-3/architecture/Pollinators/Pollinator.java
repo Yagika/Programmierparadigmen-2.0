@@ -10,6 +10,7 @@ public interface Pollinator {
 
     /**
      * @return species display name
+     * NOTE: must return non-null identifier for console output
      */
     String getName();
 
@@ -53,6 +54,8 @@ public interface Pollinator {
      *
      * @param n       today's total food available in the landscape
      * @param reserve stored food reserve (shared environment reserve)
+     *                PRECONDITION: n >= 0, reserve >= 0
+     *                POSTCONDITION: – population >= 5
      */
     void updatePopulation(double n, double reserve);
 
@@ -61,6 +64,7 @@ public interface Pollinator {
      *
      * @param day     vegetation day (1..240)
      * @param weather current weather state
+     *                POSTCONDITION: activity within [0.1, 1.8]
      */
     void updateActivity(int day, architecture.Weather weather);
 }

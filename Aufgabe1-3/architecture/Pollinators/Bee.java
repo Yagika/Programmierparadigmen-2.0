@@ -3,21 +3,18 @@ package architecture.Pollinators;
 import architecture.Weather;
 
 /**
- * Represents a wild bee population.
- * Each species has its own active season, nest position, color preference,
- * and pollination effectiveness.
- * <p>
- * STYLE: object-oriented – encapsulates bee state and behavior.
+ * Represents a generic bee species.
+ * STYLE: object-oriented – serves as abstract base for all pollinator types.
  */
-public class Bee implements Pollinator {
+public abstract class Bee implements Pollinator {
 
-
-    public String name; //a way to differentiate between bees in console.
+    // NOTE: Using protected visibility allows subclasses to reuse fields.
+    protected String name; //a way to differentiate between bees in console.
     public double population; // Number of bees of this kind in the population
-    public double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
-    public double x, y; // Coordinates of the bee nest
+    protected double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
+    protected double x, y; // Coordinates of the bee nest
     public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
-    public double effectiveness; //some bees are more effective than others.
+    protected double effectiveness; //some bees are more effective than others.
 
     //Somehow create flower preferences. Maybe color? Maybe not needed for us
     public double c_lower, c_upper; // Limits of preferred color intensity
@@ -45,8 +42,7 @@ public class Bee implements Pollinator {
         this.activity = 0.8;
     }
 
-    // Pollinator interface
-
+    // GOOD: class encapsulates full bee behavior and data
     @Override
     public String getName() {
         return name;
@@ -63,6 +59,7 @@ public class Bee implements Pollinator {
 
     @Override
     public void setPopulation(double v) {
+        // NOTE: population must never drop below 5
         this.population = Math.max(5.0, v);
     }
 
@@ -106,75 +103,26 @@ public class Bee implements Pollinator {
     /**
      * Updates population growth or decline for the next day,
      * depending on available food and reserves.
+     * BAD: updatePopulation uses hardcoded constants – low flexibility
      */
     @Override
     public void updatePopulation(double n, double reserve) {
-        if (population <= 0.0) {
-            population = 5.0;
-            return;
-        }
+        if (population <= 0.0) { population = 5.0; return; }
 
         double availableFood = Math.max(0.0, n) + Math.max(0.0, reserve) * 0.01;
         double demand = population * 0.2;
-        double ratio = demand > 0 ? (availableFood / demand) : 0.0;
+        double ratio = (demand > 0) ? availableFood / demand : 0.0;
 
         double growthRate;
-        if (ratio >= 1.1) {
-            growthRate = 1.02 + 0.03 * Math.tanh(ratio - 1.0);
-        } else if (ratio >= 0.8) {
-            growthRate = 1.00;
-        } else {
-            // Gradual decline instead of abrupt drop
-            growthRate = 0.9 + 0.1 * (ratio / 0.8);
-            if (growthRate < 0.6) growthRate = 0.6;
-        }
+        if (ratio >= 1.1) growthRate = 1.02 + 0.03 * Math.tanh(ratio - 1.0);
+        else if (ratio >= 0.8) growthRate = 1.00;
+        else growthRate = Math.max(0.6, 0.9 + 0.1 * (ratio / 0.8));
 
         double newPop = population * growthRate;
         if (!Double.isFinite(newPop)) newPop = 10.0;
-        if (newPop < 5.0) newPop = 5.0;
-        population = newPop;
+        population = Math.max(5.0, newPop);
     }
 
-
-    /**
-     * Calculates the number of bees for the next day.
-     */
-    public void calculate_population(double population, double n, double reserve) {
-        if (population <= 0.0) {
-            this.population = 5.0;
-            return;
-        }
-        double demand = population * 0.2;
-        double reserveContribution = Math.min(Math.max(0.0, reserve) * 0.01, demand * 0.5);
-        double availableFood = Math.max(0.0, n) + reserveContribution;
-
-        double ratio = (demand > 0) ? (availableFood / demand) : 0.0;
-
-        double growthRate;
-        if (ratio >= 1.1) {
-            growthRate = 1.02 + 0.03 * Math.tanh(ratio - 1.0);
-        } else if (ratio >= 0.9) {
-            growthRate = 1.00;
-        } else {
-            growthRate = 0.6 + 0.4 * (ratio / 0.9);
-            if (growthRate < 0.6) growthRate = 0.6;
-        }
-
-        double newPopulation = population * growthRate;
-        if (!Double.isFinite(newPopulation)) newPopulation = 10.0;
-        if (newPopulation < 5.0) newPopulation = 5.0;
-
-        this.population = newPopulation;
-    }
-
-    // TODO: maybe make it so that the multiplier increases towards the middle of the active period, and decreases afterwards
-    public void calculate_multiplier(int current_day) {
-        if (activeFrom <= current_day && current_day <= activeTo) {
-            this.activity = 1.5;
-        } else {
-            this.activity = 0.75;
-        }
-    }
 
     /**
      * Updates bee activity as a smooth bell-shaped function
@@ -186,8 +134,8 @@ public class Bee implements Pollinator {
             double mid = (activeFrom + activeTo) / 2.0;
             double span = Math.max(1.0, activeTo - activeFrom);
             double norm = 1.0 - Math.min(1.0, Math.abs(day - mid) / (span / 2.0));
-            double seasonal = 0.5 + 1.0 * Math.max(0, norm); // 0.5..1.5
-            activity = seasonal;
+            // 0.5..1.5
+            activity = 0.5 + Math.max(0, norm);
         } else {
             activity = 0.5;
         }

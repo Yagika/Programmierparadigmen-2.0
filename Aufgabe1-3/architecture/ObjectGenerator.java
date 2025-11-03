@@ -1,7 +1,9 @@
 package architecture;
 
 import architecture.Pollinators.Bee;
+import architecture.Pollinators.BumbleBee;
 import architecture.Pollinators.Honeybee;
+import architecture.Pollinators.WildBee;
 
 import java.util.*;
 import java.util.ArrayList;
@@ -67,7 +69,14 @@ public class ObjectGenerator {
         ArrayList<Bee> bees = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             double[] v = generateBeeValues(rand);
-            bees.add(new Bee("WildBee-" + i, v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]));
+            int type = rand.nextInt(3);
+            Bee bee;
+            switch (type) {
+                case 0 -> bee = new WildBee("WildBee-" + i, v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+                case 1 -> bee = new BumbleBee("BumbleBee-" + i, v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+                default -> bee = new Honeybee("HoneyBee-" + i, v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+            }
+            bees.add(bee);
         }
         return bees;
     }

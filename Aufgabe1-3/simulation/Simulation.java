@@ -77,7 +77,6 @@ public class Simulation {
 
                 // Bees update (season + weather)
                 for (Bee bee : bees) {
-                    bee.calculate_multiplier(day);
                     bee.updateActivity(day, weather);
                 }
 
@@ -93,7 +92,7 @@ public class Simulation {
 
                 // Bee population update based on n and reserve
                 for (Bee bee : bees) {
-                    bee.calculate_population(bee.population, n, reserve);
+                    bee.updatePopulation(n, reserve);
                 }
 
                 // Reserve accumulation
@@ -150,6 +149,18 @@ public class Simulation {
 
     private static double clamp(double v, double lo, double hi) {
         return max(lo, min(hi, v));
+    }
+    // NOTE: Integration of functional and parallel modules for assignment 3.
+
+    public void runFunctionalAndParallelExamples(ArrayList<Bee> bees) {
+        // STYLE: functional – use pure stream-based calculations
+        double avgEff = architecture.FunctionalStats.calculateAverageEffectiveness(bees);
+        long activeNow = architecture.FunctionalStats.countActiveBees(bees, 100);
+
+        System.out.printf("%n[Functional Analysis] Avg effectiveness: %.2f | Active on day 100: %d%n", avgEff, activeNow);
+
+        // STYLE: parallel – delegate to a separate class handling concurrency
+        architecture.ParallelSimulation.runParallelUpdate(bees, 1000, 500);
     }
 
     /**

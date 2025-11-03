@@ -22,6 +22,8 @@ public class Honeybee extends Bee {
     @Override
     public void updateActivity(int day, Weather weather) {
         super.updateActivity(day, weather);
-        // Honeybees are less sensitive to weather fluctuations,
+        // GOOD: override reduces sensitivity to bad weather – realistic
+        if (weather != null && weather.event == Weather.WeatherEvents.WEATHER_RAINY)
+            activity *= 0.9;
     }
 }
