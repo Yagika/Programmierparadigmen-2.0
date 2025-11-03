@@ -15,12 +15,15 @@ import java.util.ArrayList;
  * <p>
  * STYLE: procedural paradigm – provides utility functions independent of state.
  *
- * GOOD: We wanted to create a separate file that handles instantiation of objects
- * with values that we want to simulate. This led to the following benefits:
- * Control flow is easily traceable, names of methods and variables are clear, methods inside the module are
+ * We wanted to create a separate file that handles instantiation of objects
+ * with values that we want to simulate. This led to the following outcomes:
+ *
+ * GOOD: Control flow is easily traceable, names of methods and variables are clear, methods inside the module are
  * closely related and perform small number of related activities. Cohesion is high. Coupling (to FlowerGroup and
  * different kinds of pollinators) is low.
- */
+ *
+ * BAD: We use a lot of hardcoded values, most of them will have to be changed in case we want to modify the simulation,
+ * */
 public class ObjectGenerator {
 
     public static int MAX_DISTANCE = 2000;

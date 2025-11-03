@@ -24,6 +24,9 @@ public class Simulation {
     /**
      * Runs the simulation for a given number of years and prints daily results for year 1.
      * Returns summary statistics for the whole run.
+     *
+     * BAD: The control flow of this method is not completely clear, we simulate everything at the same time. This results
+     * in reduced modularization. This might hurt overall cohesion of the module.
      */
     public SimulationResult simulate(int num_years,
                                      ArrayList<Bee> bees,
