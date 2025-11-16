@@ -4,7 +4,7 @@ import architecture.Weather;
 
 /**
  * Represents a general wild bee species.
- * STYLE: object-oriented – subclass specialization of Bee.
+ * STYLE: object-oriented – subclass specialization of Architecture.Classes.Bee.
  */
 public class WildBee extends Bee {
 

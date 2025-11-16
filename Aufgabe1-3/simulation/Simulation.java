@@ -93,7 +93,7 @@ public class Simulation {
                 for (FlowerGroup fg : flowerGroups) n += fg.totalFood();
                 totalFoodAcc += n;
 
-                // Bee population update based on n and reserve
+                // Architecture.Classes.Bee population update based on n and reserve
                 for (Bee bee : bees) {
                     bee.updatePopulation(n, reserve);
                 }

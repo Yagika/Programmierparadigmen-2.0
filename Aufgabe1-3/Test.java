@@ -39,9 +39,9 @@ import java.util.ArrayList;
  * - Project structure: Dominik, Yana, and Aleksandr
  * - architecture:
  * ----- pollinators:
- * ---------- Bee: Dominik
+ * ---------- Architecture.Classes.Bee: Dominik
  * ---------- HoneyBee: Yana
- * ---------- Pollinator: Yana
+ * ---------- Architecture.interfaces.Pollinator: Yana
  * ----- FlowerSpecies: Dominik
  * ----- FlowerGroup: Aleksandr
  * ----- ObjectGenerator: Aleksandr & Dominik
@@ -71,11 +71,11 @@ import java.util.ArrayList;
  * - Project structure: Dominik, Yana, and Aleksandr
  * - architecture:
  * ----- pollinators:
- * ---------- Bee (abstract base): Dominik
+ * ---------- Architecture.Classes.Bee (abstract base): Dominik
  * ---------- HoneyBee: Aleksandr
  * ---------- WildBee: Yana
  * ---------- BumbleBee: Yana
- * ---------- Pollinator (interface): Dominik
+ * ---------- Architecture.interfaces.Pollinator (interface): Dominik
  * ----- FlowerSpecies: Dominik
  * ----- FlowerGroup: Aleksandr
  * ----- ObjectGenerator: Dominik & Yana
@@ -120,7 +120,7 @@ public class Test {
         final int YEARS = 3;
         final int NUM_BEES = 3;
 
-        System.out.println("=== Bee & Flower Simulation (Abgabe 2) ===");
+        System.out.println("=== Architecture.Classes.Bee & Flower Simulation (Abgabe 2) ===");
 
         ArrayList<Bee> bees = ObjectGenerator.generateWildBees(NUM_BEES);
 
