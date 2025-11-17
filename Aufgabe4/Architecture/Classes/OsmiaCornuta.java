@@ -10,11 +10,10 @@ import java.util.Iterator;
 /**
  * Beobachtung einer Osmia cornuta (gehörnte Mauerbiene).
  * Solitäre Wildbiene.
+ *
+ * Must be a Bee, but also Solitary and by extension Wild.
  */
 public class OsmiaCornuta extends Bee implements SolitaryBee {
-    /*
-    It only exhibits a solitary style as per document.
-     */
 
     /**
      * it is not apparent from the document if this Bee is also able to be bred/kept like the

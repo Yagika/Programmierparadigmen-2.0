@@ -7,6 +7,11 @@ import java.util.Iterator;
  */
 public interface SolitaryBee extends WildBee {
 
+    /**
+     * SolitaryBee: Subtype of WildBee, since all SolitaryBees are WildBees by default
+     * and no other type of SolitaryBee exists.
+     */
+
     /*
     A solitary Bee has to implement this method based on it's type:
      */

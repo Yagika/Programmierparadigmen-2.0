@@ -30,7 +30,6 @@ public class AndrenaBucephala extends Bee implements CommunalBee {
     }
 
     /**
-     * Todo: Iterators again
      * For communal and solitary: if it isn't one of those, it shouldn't return any iterator
      * since it cannot be compared to other Bees who are.
      */

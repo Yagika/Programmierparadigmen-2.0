@@ -9,6 +9,8 @@ import java.util.Iterator;
 /**
  * Beobachtung einer Honigbiene.
  * Immer sozial, niemals Wildbiene.
+ *
+ * Must be a Bee and also Social. no other dependencies present.
  */
 public class Honeybee extends Bee implements SocialBee{
 

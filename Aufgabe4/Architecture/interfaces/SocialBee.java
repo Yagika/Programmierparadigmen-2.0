@@ -8,6 +8,11 @@ import java.util.Iterator;
  */
 public interface SocialBee extends Observation {
 
+    /**
+     * SocialBee: direct subtype of Observation, since no other dependency exists.
+     */
+
+
     /*
     A Social Bee has to implement this method based on it's type:
      */

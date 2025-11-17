@@ -11,6 +11,8 @@ import java.util.Iterator;
 /**
  * Beobachtung einer Hummel.
  * Alle Hummeln sind Staatenbildner (sozial) und gelten hier als Wildbienen.
+ *
+ * Must be a Bee and also Social AND Wild.
  */
 public class Bumblebee extends Bee implements SocialBee, WildBee {
 
