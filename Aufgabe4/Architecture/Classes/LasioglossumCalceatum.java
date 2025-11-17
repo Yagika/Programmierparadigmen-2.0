@@ -60,6 +60,3 @@ public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee
         return new SingleElementIterator<>(this);
     }
 }
-
-
-// Typically Social but is Solitary in colder climates

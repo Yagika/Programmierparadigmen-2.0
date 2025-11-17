@@ -58,17 +58,11 @@ public abstract class Wasp implements Observation {
         return !removed;
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> earlier() {
         return EmptyIterator.instance();
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> later() {
         return EmptyIterator.instance();
