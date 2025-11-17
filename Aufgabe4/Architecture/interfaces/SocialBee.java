@@ -2,6 +2,10 @@ package Architecture.interfaces;
 
 import java.util.Iterator;
 
+/**
+ * SocialBee: Beobachtung einer Biene einer sozialen Art.
+ * Wird nur von Bee-Untertypen implementiert.
+ */
 public interface SocialBee extends Observation {
 
     /*

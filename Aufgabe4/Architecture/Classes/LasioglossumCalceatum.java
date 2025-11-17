@@ -2,15 +2,21 @@ package Architecture.Classes;
 
 import Architecture.interfaces.SocialBee;
 import Architecture.interfaces.SolitaryBee;
+import Architecture.Iterator.EmptyIterator;
+import Architecture.Iterator.SingleElementIterator;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Beobachtung einer Lasioglossum calceatum.
+ * Art kann je nach Bedingungen sozial oder solitär leben.
+ */
 public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee {
 
-    public boolean isSocial;
-    public boolean isSolitary;
-    public boolean isWild;
+    private final boolean isSocial;
+    private final boolean isSolitary;
+    private final boolean isWild;
 
     /**
      * Constructor, It has to either be Social or Solitary.
@@ -25,27 +31,30 @@ public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee
         this.isWild = isWild;
     }
 
-    /**
-     * Todo: Iterator logic.
-     */
-    public Iterator<Bee> social(){
-        if(!isSocial){
-            return null;
+    @Override
+    public Iterator<?> social() {
+        if (!isSocial) {
+            return EmptyIterator.instance();
         }
-        return null;
+        return new SingleElementIterator<>(this);
     }
 
-    public Iterator<Bee> solitary(){
-        if(!isSolitary){
-            return null;
+    @Override
+    public Iterator<?> solitary() {
+        if (!isSolitary) {
+            return EmptyIterator.instance();
         }
-        return null;
+        return new SingleElementIterator<>(this);
     }
 
-    public Iterator<Bee> wild(boolean isWild){
-        return null;
+    @Override
+    public Iterator<?> wild(boolean isWild) {
+        if (this.isWild != isWild) {
+            return EmptyIterator.instance();
+        }
+        return new SingleElementIterator<>(this);
     }
-
 }
+
 
 // Typically Social but is Solitary in colder climates

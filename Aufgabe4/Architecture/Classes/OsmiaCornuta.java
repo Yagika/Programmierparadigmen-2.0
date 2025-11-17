@@ -1,10 +1,16 @@
 package Architecture.Classes;
 
 import Architecture.interfaces.SolitaryBee;
+import Architecture.Iterator.EmptyIterator;
+import Architecture.Iterator.SingleElementIterator;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Beobachtung einer Osmia cornuta (gehörnte Mauerbiene).
+ * Solitäre Wildbiene.
+ */
 public class OsmiaCornuta extends Bee implements SolitaryBee {
     /*
     It only exhibits a solitary style as per document.
@@ -14,18 +20,15 @@ public class OsmiaCornuta extends Bee implements SolitaryBee {
      * it is not apparent from the document if this Bee is also able to be bred/kept like the
      * Bumblebee is.
      */
-    public boolean isWild;
+    private final boolean isWild;
 
     /**
      * Constructor without isWild
      */
     public OsmiaCornuta(String description, Date date, int time) {
-        this.description = description;
-        this.date = date;
-        this.time = time;
-        this.isWild = false;
-        this.removed = false;
+        this(description, date, time, false);
     }
+
     /**
      * Constructor with isWild
      */
@@ -38,20 +41,17 @@ public class OsmiaCornuta extends Bee implements SolitaryBee {
     }
 
 
-
-    /**
-     * Todo: iterator logic
-     */
     @Override
-    public Iterator<Bee> solitary() {
-        return null;
-    }
-    /**
-     * Todo: iterator logic
-     */
-    @Override
-    public Iterator<Bee> wild(boolean isWild) {
-        return null;
+    public Iterator<?> solitary() {
+        return new SingleElementIterator<>(this);
     }
 
+    @Override
+    public Iterator<?> wild(boolean isWild) {
+        if (this.isWild != isWild) {
+            return EmptyIterator.instance();
+        }
+        return new SingleElementIterator<>(this);
+    }
 }
+

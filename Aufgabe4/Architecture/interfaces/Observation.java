@@ -2,7 +2,14 @@ package Architecture.interfaces;
 
 import java.util.Date;
 import java.util.Iterator;
-
+/**
+ * Obertyp aller Beobachtungen.
+ * Zusicherungen:
+ *  - Eine Beobachtung hat ein Datum, eine Uhrzeit und eine Beschreibung.
+ *  - remove() markiert die Beobachtung logisch als entfernt.
+ *  - valid() == false genau dann, wenn remove() zuvor aufgerufen wurde.
+ *  - earlier()/later() liefern niemals null.
+ */
 public interface Observation {
 
     /**
@@ -42,14 +49,14 @@ public interface Observation {
      * @return Iterator of observations compared to THIS that have a later date
      * sorted from closest to the observation to the last.
      */
-    Iterator later();
+    Iterator<?> later();
 
 
     /**
      * @return Iterator of observations compared to THIS that have a earlier date
      * sorted from closest to this observation to earliest.
      */
-    Iterator earlier();
+    Iterator<?> earlier();
 
 
 }

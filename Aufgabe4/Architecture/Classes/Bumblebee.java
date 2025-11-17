@@ -1,11 +1,17 @@
 package Architecture.Classes;
 
+import Architecture.Iterator.EmptyIterator;
+import Architecture.Iterator.SingleElementIterator;
 import Architecture.interfaces.SocialBee;
 import Architecture.interfaces.WildBee;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Beobachtung einer Hummel.
+ * Alle Hummeln sind Staatenbildner (sozial) und gelten hier als Wildbienen.
+ */
 public class Bumblebee extends Bee implements SocialBee, WildBee {
 
     /*
@@ -13,42 +19,34 @@ public class Bumblebee extends Bee implements SocialBee, WildBee {
     also they may be bred.
      */
 
-    public boolean isWild;
-
-    /**
-     * Todo: implement iterator logic:
-     * this.isWild should be used, probably
-     */
-    @Override
-    public Iterator<Bee> wild(boolean isWild) {
-        return null;
-    }
-
-    /**
-     * Todo: implement iterator logic:
-     */
-    @Override
-    public Iterator<Bee> social() {
-        return null;
-    }
+    private final boolean isWild;
 
     /**
      * Constructor if it's know to be Wild or not.
      */
-    public Bumblebee(String description, Date date, int time, boolean isWild){
+    public Bumblebee(String description, Date date, int time, boolean isWild) {
         this.description = description;
         this.date = date;
         this.time = time;
         this.isWild = isWild;
     }
 
-    /**
-     * Constructor if it is not know to be wild or not.
-     */
-    public Bumblebee(String description, Date date, int time){
-        this.description = description;
-        this.date = date;
-        this.time = time;
-        this.isWild = false;
+    public Bumblebee(String description, Date date, int time) {
+        this(description, date, time, false);
     }
+
+    @Override
+    public Iterator<?> wild(boolean isWild) {
+        if (this.isWild != isWild) {
+            return EmptyIterator.instance();
+        }
+        return new SingleElementIterator<>(this);
+    }
+
+    @Override
+    public Iterator<?> social() {
+        // Hummeln sind immer sozial.
+        return new SingleElementIterator<>(this);
+    }
+
 }

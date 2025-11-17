@@ -1,15 +1,21 @@
 package Architecture.Classes;
 
+import Architecture.Iterator.EmptyIterator;
+import Architecture.Iterator.SingleElementIterator;
 import Architecture.interfaces.CommunalBee;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Beobachtung einer Biene der Art Andrena bucephala.
+ * Diese Art ist eine kommunale Wildbiene, kann aber auch solitär leben.
+ */
 public class AndrenaBucephala extends Bee implements CommunalBee {
 
-    public boolean isCommunal;
-    public boolean isSolitary;
-    public boolean isWild;
+    private final boolean isCommunal;
+    private final boolean isSolitary;
+    private final boolean isWild;
 
     /**
      * Constructor, but assume we always know if it's wild, communal and solitary.
@@ -29,23 +35,26 @@ public class AndrenaBucephala extends Bee implements CommunalBee {
      * since it cannot be compared to other Bees who are.
      */
     @Override
-    public Iterator<Bee> communal(){
-        if(!isCommunal){
-            return null;
+    public Iterator<?> communal() {
+        if (!isCommunal) {
+            return EmptyIterator.instance();
         }
-        return null;
+        return new SingleElementIterator<>(this);
     }
 
     @Override
     public Iterator<?> solitary() {
-        if(!isSolitary){
-            return null;
+        if (!isSolitary) {
+            return EmptyIterator.instance();
         }
-        return null;
+        return new SingleElementIterator<>(this);
     }
 
     @Override
     public Iterator<?> wild(boolean isWild) {
-        return null;
+        if (this.isWild != isWild) {
+            return EmptyIterator.instance();
+        }
+        return new SingleElementIterator<>(this);
     }
 }

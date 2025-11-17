@@ -111,7 +111,7 @@ import java.util.ArrayList;
  *
  * STYLE: mixed – OO + procedural
  */
-public class Test {
+public class Test3 {
 
     public static void main(String[] args) {
         Simulation simulator = new Simulation();

@@ -2,7 +2,11 @@ package Architecture.interfaces;
 
 import java.util.Iterator;
 
-public interface CommunalBee extends SolitaryBee{
+/**
+ * CommunalBee: Biene einer kommunalen Art.
+ * Jede kommunale Art kann auch solitär leben → Untertyp von SolitaryBee.
+ */
+public interface CommunalBee extends SolitaryBee {
 
     /**
      * Because every communalBee can also be solitary, it is necessary to implement this relationship.

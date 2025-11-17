@@ -1,7 +1,9 @@
 package Architecture.interfaces;
 
 import java.util.Iterator;
-
+/**
+ * WildBee: Beobachtung einer Wildbiene.
+ */
 public interface WildBee extends Observation{
     /**
      * iterator over all Observations of this type based on if its

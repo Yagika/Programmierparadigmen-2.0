@@ -1,11 +1,15 @@
 package Architecture.Classes;
 
 import Architecture.interfaces.Observation;
-import Architecture.interfaces.Pollinator;
+import Architecture.Iterator.EmptyIterator;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Eine Beobachtung eines Tiers einer Wespenart.
+ * Jede Biene ist eine Wesp (Unterfamilie der Stechimmen), daher ist Bee ein Untertyp von Wasp.
+ */
 public abstract class Wasp implements Observation {
 
     /**
@@ -13,10 +17,10 @@ public abstract class Wasp implements Observation {
      * just an overreaching term describing bugs with stingers.
      * All Bees are Wasps, but not all Wasps are bees.
      */
-    public Date date;
-    public int time;
-    public String description;
-    public boolean removed;
+    protected Date date;
+    protected int time;
+    protected String description;
+    protected boolean removed;
 
     /**
      * Implement getter Methods:
@@ -40,7 +44,7 @@ public abstract class Wasp implements Observation {
      * Marks this Observation as removed.
      */
     @Override
-    public void remove(){
+    public void remove() {
         removed = true;
     }
 
@@ -48,24 +52,23 @@ public abstract class Wasp implements Observation {
      * Checks if Observation is removed.
      */
     @Override
-    public boolean valid(){
-        return removed;
+    public boolean valid() {
+        return !removed;
     }
 
     /**
      * Todo: Implement logic for Iterator.
      */
     @Override
-    public Iterator<Pollinator> earlier(){
-        return null;
+    public Iterator<?> earlier() {
+        return EmptyIterator.instance();
     }
 
     /**
      * Todo: Implement logic for Iterator.
      */
     @Override
-    public Iterator<Pollinator> later(){
-        return null;
+    public Iterator<?> later() {
+        return EmptyIterator.instance();
     }
-
 }

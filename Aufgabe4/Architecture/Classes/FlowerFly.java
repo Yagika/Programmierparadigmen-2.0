@@ -1,19 +1,29 @@
 package Architecture.Classes;
 
 import Architecture.interfaces.Pollinator;
+import Architecture.Iterator.EmptyIterator;
 
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * Beobachtung einer Schwebfliege (FlowerFly).
+ * Sie ist ein Pollinator, aber keine Wasp und keine Bee.
+ */
 public class FlowerFly implements Pollinator {
     /**
      * FlowerFly is just an Observation of a Pollinator.
      */
-    public Date date;
-    public int time;
-    public String description;
-    public boolean removed;
+    private Date date;
+    private int time;
+    private String description;
+    private boolean removed = false;
 
+    public FlowerFly(String description, Date date, int time) {
+        this.description = description;
+        this.date = date;
+        this.time = time;
+    }
 
     /**
      * Implement getter Methods:
@@ -24,12 +34,12 @@ public class FlowerFly implements Pollinator {
     }
 
     @Override
-    public int getTime(){
+    public int getTime() {
         return time;
     }
 
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
@@ -37,7 +47,7 @@ public class FlowerFly implements Pollinator {
      * Marks this Observation as removed.
      */
     @Override
-    public void remove(){
+    public void remove() {
         removed = true;
     }
 
@@ -46,24 +56,24 @@ public class FlowerFly implements Pollinator {
      * Checks if Observation is removed.
      */
     @Override
-    public boolean valid(){
-        return removed;
+    public boolean valid() {
+        return !removed;
     }
 
     /**
      * Todo: Implement logic for Iterator.
      */
     @Override
-    public Iterator<Pollinator> earlier(){
-        return null;
+    public Iterator<?> earlier() {
+        return EmptyIterator.instance();
     }
 
     /**
      * Todo: Implement logic for Iterator.
      */
     @Override
-    public Iterator<Pollinator> later(){
-        return null;
+    public Iterator<?> later() {
+        return EmptyIterator.instance();
     }
 
 }

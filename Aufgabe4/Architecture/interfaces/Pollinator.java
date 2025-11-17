@@ -1,8 +1,12 @@
 package Architecture.interfaces;
 
+/**
+ * Beobachtung eines Insekts, das als üblicher Bestäuber gilt.
+ * Alle Bees sind Pollinator, FlowerFly auch, weitere Typen könnten folgen.
+ */
 public interface Pollinator extends Observation {
 
     /**
-     * This is has to be an Interface because Bee is already a Subclass of Wasp, cannot inherit from two classes.
+     * This has to be an Interface because Bee is already a Subclass of Wasp, cannot inherit from two classes.
      */
 }
