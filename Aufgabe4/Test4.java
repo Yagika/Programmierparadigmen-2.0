@@ -9,7 +9,7 @@ import java.util.Date;
  * - FlowerFly ist kein WildBee: WildBee bezieht sich nur auf Wildbienen, nicht auf andere Pollinatoren.
  * - SocialBee ist kein WildBee: soziale Arten können, müssen aber nicht Wildbienen sein (z.B. Honeybee).
  */
-public class Test {
+public class Test4 {
     /**
      * Kurzbeschreibung der Aufgabenaufteilung:
      * - Dominik: Grundstruktur der Interfaces und Obertypen (Observation, Wasp, Bee, Pollinator, WildBee, ...)
@@ -20,7 +20,7 @@ public class Test {
         Date now = new Date();
 
         // --- Beobachtungen anlegen ---
-        Observation o1 = new Honeybee("Honigbiene im Stock", now, 900);
+        Observation o1 = new Honeybee("Honigbiene im свStock", now, 900);
         Observation o2 = new Bumblebee("Hummel an Blüte", now, 905);
         Observation o3 = new OsmiaCornuta("Mauerbiene an Krokus", now, 910);
         Observation o4 = new LasioglossumCalceatum("Lasioglossum sozial", now, 915, true, false);
