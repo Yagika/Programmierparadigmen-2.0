@@ -59,6 +59,14 @@ public class ReflectionReport {
         printGuaranteeCount(personsGuaranteeCount);
     }
 
+    /**
+     * Prints data about classes, interfaces and annotations. Prints names, responsible people, invariants and
+     * historic constraints
+     * @param component - class, interface or annotation
+     * @param responsible - annotation of responsible person
+     * @param invariant - annotation of invariant for this component
+     * @param historyConstraint - annotation of historic constraint
+     */
     public void printClassData(Class<?> component, Responsible responsible, Invariant invariant, HistoryConstraint historyConstraint) {
         System.out.printf("Class name: %s, Responsible: %s \n", component.getName(), responsible.value());
         if (invariant != null) {
@@ -69,20 +77,38 @@ public class ReflectionReport {
         }
     }
 
+    /**
+     * Prints out names of people and number of
+     * @param persons - Hash map containing names of people and numbers of classes, interfaces and annotations
+     */
     public void printClassCount(HashMap<String, Integer> persons) {
         for (String key : persons.keySet()) {
             System.out.printf("%s is responsible for %d classes, interfaces and annotations \n", key, persons.get(key));
         }
     }
 
+    /**
+     * Prints out names of responsible people and corresponding number of methods and constructors
+     * @param persons - Hash map containing names of people and number of methods and constructors
+     */
     public void printMethodsCount(HashMap<String, Integer> persons) {
         for (String key : persons.keySet()) {System.out.printf("%s is responsible for %d methods and constructors \n", key, persons.get(key));}
     }
 
+    /**
+     * Prints out names of responsible people and corresponding number of guarantees
+     * @param persons - Hash map containing names of people and number of guarantees
+     */
     public void printGuaranteeCount(HashMap<String, Integer> persons) {
         for (String key : persons.keySet()) {System.out.printf("%s is responsible for %d guarantees \n", key, persons.get(key));}
     }
 
+    /**
+     * Print out data about methods. Prints method names, signatures and guarantees (if applicable)
+     * @param method
+     * @param precondition
+     * @param postcondition
+     */
     public void printMethodsData(Method method, Precondition precondition, Postcondition postcondition) {
         System.out.printf("Method name: %s \n", method.getName());
 
@@ -103,8 +129,5 @@ public class ReflectionReport {
             System.out.printf("Precondition: %s", precondition.value());
         }
         if (postcondition != null) {System.out.printf("Post-condition: %s \n \n", postcondition.value());}
-//        System.out.println();
     }
-
-
 }
