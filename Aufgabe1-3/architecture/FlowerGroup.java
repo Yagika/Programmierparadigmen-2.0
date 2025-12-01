@@ -13,11 +13,11 @@ import java.util.Random;
  */
 public class FlowerGroup {
 
-    public static final double MAX_DISTANCE = 2000.0;
+    private static final double MAX_DISTANCE = 2000.0;
 
-    public ArrayList<FlowerSpecies> speciesList;
-    public double x;
-    public double y; // Coordinates
+    private ArrayList<FlowerSpecies> speciesList;
+    private double x;
+    private double y; // Coordinates
 
 
     public FlowerGroup(ArrayList<FlowerSpecies> speciesList, double x, double y) {
@@ -65,7 +65,7 @@ public class FlowerGroup {
                 try {
                     var cLow = ((architecture.Pollinators.Bee) bee).getPrefLower();
                     var cUp = ((architecture.Pollinators.Bee) bee).getPrefUpper();
-                    pref = (plant.brightness >= cLow && plant.brightness <= cUp) ? 1.25 : 0.8;
+                    pref = (plant.getBrightness() >= cLow && plant.getBrightness() <= cUp) ? 1.25 : 0.8;
                 } catch (ClassCastException ignored) {
                 }
 
@@ -86,7 +86,7 @@ public class FlowerGroup {
             FlowerSpecies plant = speciesList.get(idx);
             double share = plantAttract[idx] / groupAttractiveness;
             double inc = share * plant.getB() * (sunD + 2.0) * 0.015;
-            plant.s = Math.max(0.0, Math.min(1.0, plant.s + inc));
+            plant.setS(plant.getS() + inc);
         }
     }
 
@@ -95,8 +95,9 @@ public class FlowerGroup {
      */
     public void resetForVegetation() {
         for (FlowerSpecies plant : speciesList) {
-            plant.b = 0.0;
-            plant.s = 0.0;
+            plant.setB(0.0);
+            plant.setS(0.0);
+
         }
     }
 
@@ -107,10 +108,25 @@ public class FlowerGroup {
         //parse a number that stays the same, so that everyone gets the same outcome and the data
         //can be recreated.
         for (FlowerSpecies flowerSpecies : speciesList) {
-            double randomDouble = rand.nextDouble() * (flowerSpecies.c_upper - flowerSpecies.c_lower) + flowerSpecies.c_lower;
+            double randomDouble = rand.nextDouble() *
+                    (flowerSpecies.getCUpper() - flowerSpecies.getCLower()) + flowerSpecies.getCLower();
 
-            flowerSpecies.y = flowerSpecies.y * flowerSpecies.s * randomDouble;
-            if (flowerSpecies.y < 0) flowerSpecies.y = 0;
+            double newY = flowerSpecies.getY() * flowerSpecies.getS() * randomDouble;
+            flowerSpecies.setY(newY);
+
         }
     }
+
+    public ArrayList<FlowerSpecies> getSpeciesList() {
+        return speciesList;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
 }

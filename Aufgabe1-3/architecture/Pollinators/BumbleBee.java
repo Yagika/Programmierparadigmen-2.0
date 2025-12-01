@@ -18,7 +18,7 @@ public class BumbleBee extends Bee {
     public void updateActivity(int day, Weather weather) {
         super.updateActivity(day, weather);
         // GOOD: strong weather tolerance, keeps system stable under variation
-        if (weather != null && weather.temperature < 10)
-            activity *= 1.2;
+        if (weather != null && weather.getTemperature() < 10)
+            scaleActivity(1.2);
     }
 }

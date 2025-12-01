@@ -10,14 +10,14 @@ public abstract class Bee implements Pollinator {
 
     // NOTE: Using protected visibility allows subclasses to reuse fields.
     protected String name; //a way to differentiate between bees in console.
-    public double population; // Number of bees of this kind in the population
-    protected double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
-    protected double x, y; // Coordinates of the bee nest
-    public double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
-    protected double effectiveness; //some bees are more effective than others.
+    private double population; // Number of bees of this kind in the population
+    private double activeFrom, activeTo; // Time of the year when bees are active. 0 <= activeFrom <= activeTo <= 240
+    private double x, y; // Coordinates of the bee nest
+    private double activity; // Multiplier that bees get because of some condition (e.g. time of year). Use it to increase pollination for example
+    private double effectiveness; //some bees are more effective than others.
 
     //Somehow create flower preferences. Maybe color? Maybe not needed for us
-    public double c_lower, c_upper; // Limits of preferred color intensity
+    private double c_lower, c_upper; // Limits of preferred color intensity
 
     /**
      * Constructs a new bee species with biological and spatial parameters.
@@ -141,7 +141,7 @@ public abstract class Bee implements Pollinator {
         }
 
         if (weather != null) {
-            switch (weather.event) {
+            switch (weather.getEvent()) {
                 case WEATHER_SUNNY -> activity *= 1.0;
                 case WEATHER_PARTLY_CLOUDY -> activity *= 0.9;
                 case WEATHER_CLOUDY -> activity *= 0.8;
@@ -151,6 +151,9 @@ public abstract class Bee implements Pollinator {
         }
 
         activity = Math.max(0.1, Math.min(1.8, activity));
+    }
+    protected void scaleActivity(double factor) {
+        this.activity *= factor;
     }
 
 }

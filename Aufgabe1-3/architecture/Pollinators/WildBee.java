@@ -18,7 +18,7 @@ public class WildBee extends Bee {
     public void updateActivity(int day, Weather weather) {
         super.updateActivity(day, weather);
         // BAD: too weather-sensitive – may cause instability in simulation
-        if (weather != null && weather.event == Weather.WeatherEvents.WEATHER_STORMY)
-            activity *= 0.5;
+        if (weather != null && weather.getEvent() == Weather.WeatherEvents.WEATHER_STORMY)
+            scaleActivity(0.5);
     }
 }

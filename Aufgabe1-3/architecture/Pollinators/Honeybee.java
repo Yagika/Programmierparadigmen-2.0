@@ -23,7 +23,7 @@ public class Honeybee extends Bee {
     public void updateActivity(int day, Weather weather) {
         super.updateActivity(day, weather);
         // GOOD: override reduces sensitivity to bad weather – realistic
-        if (weather != null && weather.event == Weather.WeatherEvents.WEATHER_RAINY)
-            activity *= 0.9;
+        if (weather != null && weather.getEvent() == Weather.WeatherEvents.WEATHER_RAINY)
+            scaleActivity(0.9);
     }
 }

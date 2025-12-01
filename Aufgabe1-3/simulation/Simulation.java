@@ -14,7 +14,7 @@ import static java.lang.Math.min;
  * - simulates weather
  * - calculates food supply and bee population
  * - updates plant states
- *
+ * <p>
  * STYLE: mixed – OO + procedural
  */
 public class Simulation {
@@ -24,9 +24,11 @@ public class Simulation {
     /**
      * Runs the simulation for a given number of years and prints daily results for year 1.
      * Returns summary statistics for the whole run.
-     *
+     * <p>
      * BAD: The control flow of this method is not completely clear, we simulate everything at the same time. This results
      * in reduced modularization. This might hurt overall cohesion of the module.
+     * GOOD: single orchestration method – easy to see full daily update pipeline.
+     * BAD: mixes printing with model logic, which makes automated testing harder.
      */
     public SimulationResult simulate(int num_years,
                                      ArrayList<Bee> bees,
@@ -53,7 +55,9 @@ public class Simulation {
                 System.out.println("Day  |  Temp  | Sun(d) | CumSun(h) | Moist(f) |  Food(n)  |  Reserve  |  TotalBees  | Bees{ name:pop ... }");
                 System.out.println("-----+--------+--------+-----------+----------+-----------+-----------+-------------+---------------------");
             }
-
+            /**
+             GOOD: simple sequential loop – control flow is easy to follow.
+             */
             for (int day = 1; day <= VEGETATION_DAYS; day++) {
                 weather.NextWeatherEvent(day, rand.nextDouble());
                 weather.NextTemperature(day, rand.nextGaussian()); // std ~ 1.0 °C
@@ -62,17 +66,18 @@ public class Simulation {
                 h += d;
 
                 f *= (0.995 + rand.nextGaussian() * 0.01);
-                switch (weather.event) {
+                switch (weather.getEvent()) {
                     case WEATHER_RAINY -> f += 0.03;
                     case WEATHER_STORMY -> f += 0.05;
                     case WEATHER_SUNNY -> f -= 0.015;
-                    default -> {}
+                    default -> {
+                    }
                 }
                 f = clamp(f, 0.0, 1.0);
 
                 // Plants update
                 for (FlowerGroup fg : flowerGroups) {
-                    for (FlowerSpecies fs : fg.speciesList) {
+                    for (FlowerSpecies fs : fg.getSpeciesList()) {
                         fs.moisture_threshold(f);
                         fs.bloom_time(h, d);
                     }
@@ -106,11 +111,11 @@ public class Simulation {
                     StringBuilder beeBrief = new StringBuilder();
                     for (Bee b : bees) {
                         beeBrief.append(b.getName())
-                                .append(":").append(Math.round(b.population))
+                                .append(":").append(Math.round(b.getPopulation()))
                                 .append(" ");
                     }
                     System.out.printf("%3d  | %6.1f | %6.2f | %9.2f | %8.3f | %9.2f | %9.2f | %11.0f | %s%n",
-                            day, weather.temperature, d, h, f, n, reserve, calculate_total_bees(bees), beeBrief);
+                            day, weather.getTemperature(), d, h, f, n, reserve, calculate_total_bees(bees), beeBrief);
                 }
             }
 
@@ -118,10 +123,12 @@ public class Simulation {
             double winterMult = 0.6 + rand.nextDouble() * 0.3;
             double totalBees = 0.0;
             for (Bee bee : bees) {
-                bee.population = Math.max(10, Math.round(bee.population * winterMult));
-                double winterConsumption = Math.min(reserve, bee.population * 0.5);
+                double newPop = Math.max(10, Math.round(bee.getPopulation() * winterMult));
+                bee.setPopulation(newPop);
+
+                double winterConsumption = Math.min(reserve, bee.getPopulation() * 0.5);
                 reserve = Math.max(0.0, reserve - winterConsumption);
-                totalBees += bee.population;
+                totalBees += bee.getPopulation();
             }
 
             // Plants resting phase
@@ -146,7 +153,7 @@ public class Simulation {
      */
     private double calculate_total_bees(ArrayList<Bee> bees) {
         double total = 0.0;
-        for (Bee bee : bees) total += bee.population;
+        for (Bee bee : bees) total += bee.getPopulation();
         return total;
     }
 
