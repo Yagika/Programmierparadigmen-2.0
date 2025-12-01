@@ -1,8 +1,10 @@
-package Classes;
+package Flower;
+import Meta.Responsible;
 
 /**
  * Collects statistics for flowers per species.
  */
+@Responsible("Aleksander")
 public class FlowerStatistics {
 
     private int countX;

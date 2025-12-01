@@ -1,17 +1,25 @@
-package Classes;
+package Bee;
+
+import Flower.Flower;
+import Meta.Precondition;
+import Meta.Postcondition;
+import Meta.Responsible;
 
 /**
- * Bee of type U, prefers plantX, can get plantY, cannot get plantZ
- * at time of creation, is active for exactly 9 days.
+ * Bee of type U.
+ * Prefers plant X, can use plant Y, cannot use plant Z.
+ * When created, is active for exactly 9 days.
  */
+@Responsible("Dominik")
 public class BeeU extends Bee {
-
+    @Precondition("No specific precondition. Bee U always starts with fixed activeTime 9.")
+    @Postcondition("The bee's activeTime is 9 days.")
     public BeeU() {
         super(9);
     }
 
     /**
-     * collectFrom(Flower flower), calls accept(BeeU bee) in given flower if Bee is active.
+     * If both bee and flower are active, this bee visits the given flower.
      */
     @Override
     public void collectFrom(Flower flower) {

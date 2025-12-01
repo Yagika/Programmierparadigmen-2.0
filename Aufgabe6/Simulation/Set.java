@@ -1,9 +1,15 @@
-package Classes;
+package Simulation;
+
+import Meta.Responsible;
+import Meta.Precondition;
+import Meta.Postcondition;
+
 
 /**
  * Simple set-like structure without generics and without arrays.
  * Implemented as singly linked list.
  */
+@Responsible("Yana")
 public class Set {
 
     private static class Node {
@@ -23,7 +29,7 @@ public class Set {
         head = null;
         size = 0;
     }
-
+    @Postcondition("If the argument is not null, the element is added and size() is increased by 1.")
     public void add(Object o) {
         if (o == null) return;
         head = new Node(o, head);
@@ -36,8 +42,8 @@ public class Set {
 
     /**
      * Returns the i-th element (0-based).
-     * PRE: 0 <= index < size()
      */
+    @Precondition("0 <= index < size()")
     public Object get(int index) {
         Node cur = head;
         int i = 0;
@@ -48,6 +54,7 @@ public class Set {
         return cur != null ? cur.value : null;
     }
 
+    @Postcondition("All elements identical to the argument by '==' are removed, and size() is decreased accordingly.")
     public void remove(Object o) {
         Node dummy = new Node(null, head);
         Node prev = dummy;

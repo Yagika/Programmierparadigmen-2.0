@@ -1,10 +1,15 @@
-package Classes;
+package Flower;
+import Meta.Responsible;
+import Bee.BeeU;
+import Bee.BeeV;
+import Bee.BeeW;
 
 /**
  * Flower of type Y, only accepts BeeV and BeeU.
  * active for 9 days.
  * Implements the Visitor-Pattern as described in the scriptum document on page 212.
  */
+@Responsible("Dominik")
 public class FlowerY extends Flower{
 
     /**

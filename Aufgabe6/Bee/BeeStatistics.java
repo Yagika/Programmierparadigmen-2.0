@@ -1,8 +1,11 @@
-package Classes;
+package Bee;
+
+import Meta.Responsible;
 
 /**
  * Collects statistics for bees per species.
  */
+@Responsible("Aleksander")
 public class BeeStatistics {
 
     private int countU;

@@ -1,16 +1,21 @@
-package Classes;
-
+package Flower;
+import Bee.BeeU;
+import Bee.BeeV;
+import Bee.BeeW;
+import Meta.Responsible;
+import Meta.Precondition;
+import Meta.Postcondition;
 
 /**
  * Flower of type X, only accepts BeeU and BeeW.
  * active for 9 days.
  * Implements the Visitor-Pattern as described in the scriptum document on page 212.
  */
+@Responsible("Dominik")
 public class FlowerX extends Flower{
 
-    /**
-     * constructor: activeTime of FlowerX is 9 days.
-     */
+    @Precondition("No specific precondition. Flower X always starts with fixed activeTime 9.")
+    @Postcondition("The flower's activeTime is 9 days.")
     public FlowerX() {
         super(9);
     }
@@ -19,6 +24,8 @@ public class FlowerX extends Flower{
      * accept(BeeU bee): this flower accepts BeeU
      * increments counter of U in FlowerX, increments counter of X in BeeU
      */
+    @Precondition("Both bee and this flower may be active; if bee or flower is inactive, no effect.")
+    @Postcondition("If both were active, the visit counter for U and the bee's counter for X are increased by 1.")
     @Override
     public void accept(BeeU bee){
         if(isActive()){

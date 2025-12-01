@@ -1,7 +1,18 @@
 package Simulation;
 
-import Classes.*;
 import java.util.Random;
+
+
+import Bee.Bee;
+import Bee.BeeU;
+import Bee.BeeV;
+import Bee.BeeW;
+import Bee.BeeStatistics;
+import Flower.Flower;
+import Flower.FlowerX;
+import Flower.FlowerY;
+import Flower.FlowerZ;
+import Flower.FlowerStatistics;
 import Meta.Precondition;
 import Meta.Postcondition;
 import Meta.Responsible;
@@ -81,6 +92,7 @@ public class Simulation {
      *   respecting preference / fallback rules.
      * - at the end, decrement active days of bees and flowers.
      */
+    @Precondition("day >= 1.")
     private void simulateOneDay(int day) {
         int beeCount = bees.size();
 
