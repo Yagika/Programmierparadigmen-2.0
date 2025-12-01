@@ -16,7 +16,7 @@ import java.util.Iterator;
  * Dominik: MSet, Bee hierarchy (Bee, WildBee, HoneyBee), Num.
  * Aleksander: Test and helper methods.
  */
-public class Test {
+public class Test5 {
 
     public static void main(String[] args) {
         System.out.println("===== Programmierparadigmen - Aufgabe 5 Test =====");

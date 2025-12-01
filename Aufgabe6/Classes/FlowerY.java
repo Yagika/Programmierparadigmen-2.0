@@ -11,13 +11,14 @@ public class FlowerY extends Flower{
      * constructor: activeTime of FlowerY is 9 days.
      */
     public FlowerY() {
-        activeTime = 9;
+        super(9);
     }
 
     /**
      * accept(BeeV bee): this flower accepts BeeV
      * increments counter of V in FlowerY, increments counter of Y in BeeV
      */
+    @Override
     public void accept(BeeV bee){
         if(isActive()){
             incrementV();
@@ -28,6 +29,7 @@ public class FlowerY extends Flower{
      * accept(BeeU bee): this flower accepts BeeU
      * increments counter of U in FlowerY, increments counter of Y in BeeU
      */
+    @Override
     public void accept(BeeU bee){
         if(isActive()){
             incrementU();
@@ -37,5 +39,16 @@ public class FlowerY extends Flower{
     /**
      * accept(BeeW bee): this flower does not accept BeeW
      */
+    @Override
     public void accept(BeeW bee){}
+    @Override
+    public boolean isPreferredBy(BeeV bee) { return true; }
+
+    @Override
+    public boolean isAlternativeFor(BeeU bee) { return true; }
+
+    @Override
+    public void report(FlowerStatistics stats) {
+        stats.record(this);
+    }
 }

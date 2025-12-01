@@ -4,22 +4,31 @@ package Classes;
  * Bee of type W, prefers plantZ, can get plantX, cannot get plantY
  * at time of creation, is active for exactly 10 days.
  */
-
 public class BeeW extends Bee {
 
-    /**
-     * collectFrom(Flower flower), calls accept(Bee bee) in given flower if Bee is considered active.
-     */
-    public void collectFrom(Flower flower){
-        if(isActive()){
+    public BeeW() {
+        super(10);
+    }
+
+    @Override
+    public void collectFrom(Flower flower) {
+        if (isActive() && flower != null && flower.isActive()) {
             flower.accept(this);
         }
     }
 
-    /**
-     * constructor: activeTime of W is 10
-     */
-    public BeeW(){
-        activeTime = 10;
+    @Override
+    public boolean isPreferred(Flower flower) {
+        return flower.isPreferredBy(this);
+    }
+
+    @Override
+    public boolean isAlternative(Flower flower) {
+        return flower.isAlternativeFor(this);
+    }
+
+    @Override
+    public void report(BeeStatistics stats) {
+        stats.record(this);
     }
 }
