@@ -1,7 +1,6 @@
 import Bee.*;
+import Meta.*;
 import Simulation.*;
-import Meta.ProgramComponents;
-import Meta.Responsible;
 
 /**
  * Entry point for the program.
@@ -20,6 +19,7 @@ import Meta.Responsible;
         Flower.FlowerStatistics.class,
         Set.class,
         Simulation.class,
+        ContextBReporter.class,
         Meta.Precondition.class,
         Meta.Postcondition.class,
         Meta.Invariant.class,
@@ -44,6 +44,9 @@ public class Test {
         }
 
         // --- Context B ---
-        ReflectionReport.printContextBReport();
+        ProgramComponents components = Test.class.getAnnotation(ProgramComponents.class);
+
+        ReflectionReport reporter = new ReflectionReport();
+        reporter.printContextBReport(components);
     }
 }

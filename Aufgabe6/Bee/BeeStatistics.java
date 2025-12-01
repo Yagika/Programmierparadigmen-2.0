@@ -5,7 +5,7 @@ import Meta.Responsible;
 /**
  * Collects statistics for bees per species.
  */
-@Responsible("Aleksander")
+@Responsible("Aleksandr")
 public class BeeStatistics {
 
     private int countU;

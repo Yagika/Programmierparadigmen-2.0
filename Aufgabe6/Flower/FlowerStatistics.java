@@ -4,7 +4,7 @@ import Meta.Responsible;
 /**
  * Collects statistics for flowers per species.
  */
-@Responsible("Aleksander")
+@Responsible("Aleksandr")
 public class FlowerStatistics {
 
     private int countX;

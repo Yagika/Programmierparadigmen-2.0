@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 @Responsible("Aleksandr")
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface ProgramComponents {
-    Class<?>[] value();
+@Target({ElementType.TYPE})
+public @interface ContextBReporter {
+    String value();
 }
