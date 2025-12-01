@@ -9,7 +9,7 @@ import java.util.Map;
  * Uses reflection to extract program components, responsibilities and assertions.
  */
 @Responsible("Yana")
-public class ContextBReporter00 {
+public class ContextBReporter {
 
     public static void printReport(Class<?>[] components) {
         System.out.println("===== Kontext B: Datenextraktion =====");

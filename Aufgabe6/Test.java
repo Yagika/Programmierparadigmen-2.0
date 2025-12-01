@@ -1,5 +1,4 @@
 import Bee.*;
-import Meta.ContextBReporter00;
 import Simulation.*;
 import Meta.ProgramComponents;
 import Meta.Responsible;
@@ -27,12 +26,12 @@ import Meta.Responsible;
         Meta.HistoryConstraint.class,
         Meta.ProgramComponents.class,
         Meta.Responsible.class,
-        ContextBReporter00.class,
+        Meta.ContextBReporter.class,
         ReflectionReport.class,
-        Test00.class
+        Test.class
 })
 @Responsible("Yana")
-public class Test00 {
+public class Test {
 
     public static void main(String[] args) {
         // --- Context A ---

@@ -2,7 +2,7 @@ package Meta;
 
 import java.lang.annotation.*;
 
-@Responsible("Aleksander")
+@Responsible("Aleksandr")
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface Responsible {

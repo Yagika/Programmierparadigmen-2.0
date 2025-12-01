@@ -1,6 +1,6 @@
 package Meta;
 
-@Responsible("Aleksander")
+@Responsible("Aleksandr")
 class MemberStats {
     int components;
     int methodsAndConstructors;
