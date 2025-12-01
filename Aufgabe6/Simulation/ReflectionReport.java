@@ -10,7 +10,7 @@ import java.util.HashMap;
 @Responsible("Aleksandr")
 public class ReflectionReport {
     public void printContextBReport(ProgramComponents components) {
-        //Print names of all implemented interfaces, methods, classes
+
         HashMap<String, Integer> personsClassCount = new HashMap<>();
         HashMap<String, Integer> personsMethodsCount = new HashMap<>();
         HashMap<String, Integer> personsGuaranteeCount = new HashMap<>();
@@ -48,9 +48,9 @@ public class ReflectionReport {
                 printMethodsData(method, precondition, postcondition);
                 methodCounter++;
             }
+            System.out.println();
             personsMethodsCount.put(responsible.value(), personsMethodsCount.get(responsible.value()) + methodCounter);
             personsGuaranteeCount.put(responsible.value(), personsGuaranteeCount.get(responsible.value())+ guaranteeCounter);
-            System.out.println();
         }
         printClassCount(personsClassCount);
         System.out.println();
@@ -120,7 +120,6 @@ public class ReflectionReport {
             for (Class<?> parameter : parameters) {
                 System.out.printf(parameter.getName());
             }
-            System.out.println();
         }
 
         System.out.printf("Return type: %s \n", returnType.getName());
@@ -129,5 +128,6 @@ public class ReflectionReport {
             System.out.printf("Precondition: %s", precondition.value());
         }
         if (postcondition != null) {System.out.printf("Post-condition: %s \n \n", postcondition.value());}
+        else {System.out.println();}
     }
 }
