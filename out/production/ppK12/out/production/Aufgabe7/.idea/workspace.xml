@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b0992367-22a7-4348-ade2-5a6f15d80dbc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BeesAlgorithm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bounds.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ComparisonFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Location.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LocationGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ObjectiveFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Solution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aufgabe1-3/architecture/FlowerGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Aufgabe6/FlowerGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aufgabe6/Meta/ContextBReporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Aufgabe6/Meta/ContextBReporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ppK12.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../ppK12.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="36rggnkLOcf6tGALLOFZrWkNVHi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b0992367-22a7-4348-ade2-5a6f15d80dbc" name="Changes" comment="" />
+      <created>1765770220614</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765770220614</updated>
+      <workItem from="1765770222438" duration="4514000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
