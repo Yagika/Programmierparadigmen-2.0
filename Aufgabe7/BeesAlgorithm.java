@@ -146,27 +146,30 @@ public class BeesAlgorithm {
 
 
     /**
-     * Creates the local search bounds (s) centered around a given Location.
-     * This ensures the search is constrained to the flower patch.
-     * Currently not a funcrional style
+     * Creates the local search bounds centered around a given Location.
      */
     private static Bounds createLocalBounds(Location center, Bounds globalBounds, double relativeSize) {
-        int a = globalBounds.getDimension();
-        double[][] localRanges = new double[a][2];
-        double[] centerArgs = center.getCoordinates();
+        // We use IntStream to iterate over the dimensions (0 to a-1)
+        double[][] localRanges = IntStream.range(0, globalBounds.getDimension())
+                .mapToObj(i -> {
+                    // 1. Capture necessary values for this dimension
+                    double centerVal = center.getCoordinates()[i];
+                    double globalMin = globalBounds.getMin(i);
+                    double globalMax = globalBounds.getMax(i);
 
-        for (int i = 0; i < a; i++) {
-            double globalRange = globalBounds.getMax(i) - globalBounds.getMin(i);
-            // Local range/radius is calculated based on the global range and relative size 's'
-            double localSearchRadius = globalRange * relativeSize;
+                    // 2. Calculate radius logic
+                    double radius = (globalMax - globalMin) * relativeSize;
 
-            // Calculate min and max for the local field, clamped by global bounds
-            double localMin = Math.max(centerArgs[i] - localSearchRadius, globalBounds.getMin(i));
-            double localMax = Math.min(centerArgs[i] + localSearchRadius, globalBounds.getMax(i));
+                    // 3. Calculate and clamp new bounds
+                    double localMin = Math.max(centerVal - radius, globalMin);
+                    double localMax = Math.min(centerVal + radius, globalMax);
 
-            localRanges[i][0] = localMin;
-            localRanges[i][1] = localMax;
-        }
+                    // 4. Return the pair as a double array
+                    return new double[]{localMin, localMax};
+                })
+                // Convert the Stream<double[]> directly into double[][]
+                .toArray(double[][]::new);
+
         return new Bounds(localRanges);
     }
 }

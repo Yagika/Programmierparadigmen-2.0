@@ -57,9 +57,9 @@ public class Test {
         int n = 200;     // Scout bees
         int m = 30;     // Best fields
         int e = 10;      // Excellent fields
-        int p = 30;     // Recruited for excellent fields
-        int q = 50;     // Recruited for other fields
-        double s = 0.9; // Relative size of the field
+        int p = 50;     // Recruited for excellent fields
+        int q = 30;     // Recruited for other fields
+        double s = 0.5; // Relative size of the field
         int r = 10;     // 10 results to return
 
         List<Solution> results = BeesAlgorithm.runBA(
@@ -100,20 +100,20 @@ public class Test {
         Bounds w = new Bounds(w_ranges);
 
         // Tuned BA Parameters
-        int t = 5000;    // Search steps
-        int n = 100;     // Scout bees
-        int m = 10;     // Best fields
-        int e = 3;      // Excellent fields
-        int p = 20;     // Recruited for excellent fields
-        int q = 40;     // Recruited for other fields
-        double s = 0.9; // Relative size of the field
-        int r = 3;     // 10 results to return
+        int t = 20000;    // Search steps
+        int n = 1000;     // Scout bees
+        int m = 15;     // Best fields
+        int e = 5;      // Excellent fields
+        int p = 200;     // Recruited for excellent fields
+        int q = 100;     // Recruited for other fields
+        double s = 0.6; // Relative size of the field
+        int r = 5;     // 10 results to return
 
         List<Solution> results = BeesAlgorithm.runBA(
                 a, SQUARES, w, ZEROS, t, n, m, e, p, q, s, r);
 
         // Output Results. Imperative style
-        System.out.println("Goal: Find 10 Maxima (Expected Max: 1.0) in [-1800°, 1800°]");
+        System.out.println("Goal: Find several zeros]");
         System.out.printf("Total iterations (t): %d. Total search budget: %d (n + e*p + (m-e)*q) calls per step.%n",
                 t, n + e*p + (m-e)*q);
 
@@ -148,8 +148,8 @@ public class Test {
         int n = 100;     // Scout bees
         int m = 10;     // Best fields
         int e = 3;      // Excellent fields
-        int p = 20;     // Recruited for excellent fields
-        int q = 40;     // Recruited for other fields
+        int p = 40;     // Recruited for excellent fields
+        int q = 20;     // Recruited for other fields
         double s = 0.6; // Relative size of the field
         int r = 10;     // 10 results to return
 
@@ -157,7 +157,7 @@ public class Test {
                 a, COSINE_SQUARED, w, MINIMIZER, t, n, m, e, p, q, s, r);
 
         // Output Results. Imperative style!
-        System.out.println("Goal: Find 10 Maxima (Expected Max: 1.0) in [-1800°, 1800°]");
+        System.out.println("Goal: Find 10 Minima");
         System.out.printf("Total iterations (t): %d. Total search budget: %d (n + e*p + (m-e)*q) calls per step.%n",
                 t, n + e*p + (m-e)*q);
 
