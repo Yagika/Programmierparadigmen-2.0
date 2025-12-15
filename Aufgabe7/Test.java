@@ -65,7 +65,7 @@ public class Test {
         List<Solution> results = BeesAlgorithm.runBA(
                 a, SINE_FUNCTION, w, MAXIMIZER, t, n, m, e, p, q, s, r);
 
-        // Output Results
+        // Output Results. Imperative style!
         System.out.println("Goal: Find 10 Maxima (Expected Max: 1.0) in [-1800°, 1800°]");
         System.out.printf("Total iterations (t): %d. Total search budget: %d (n + e*p + (m-e)*q) calls per step.%n",
                 t, n + e*p + (m-e)*q);
@@ -112,7 +112,7 @@ public class Test {
         List<Solution> results = BeesAlgorithm.runBA(
                 a, SQUARES, w, ZEROS, t, n, m, e, p, q, s, r);
 
-        // Output Results
+        // Output Results. Imperative style
         System.out.println("Goal: Find 10 Maxima (Expected Max: 1.0) in [-1800°, 1800°]");
         System.out.printf("Total iterations (t): %d. Total search budget: %d (n + e*p + (m-e)*q) calls per step.%n",
                 t, n + e*p + (m-e)*q);
@@ -135,13 +135,11 @@ public class Test {
         // 20-60 second constraint requires efficient parameter tuning
         // Target: Maxima at 90° (+/- k*360°)
 
-        int a = 2; // 1 parameter
+        int a = 1; // 1 parameter
 
         // Boundaries w: [-100, 100] (5 full cycles in each direction) [cite: 62]
         double[][] w_ranges = new double[][]{
                 {-1800.0, 1800.0},
-                {-1800.0, 1800.0},
-                {-1800.0, 1800.0}
         };
         Bounds w = new Bounds(w_ranges);
 
@@ -158,7 +156,7 @@ public class Test {
         List<Solution> results = BeesAlgorithm.runBA(
                 a, COSINE_SQUARED, w, MINIMIZER, t, n, m, e, p, q, s, r);
 
-        // Output Results
+        // Output Results. Imperative style!
         System.out.println("Goal: Find 10 Maxima (Expected Max: 1.0) in [-1800°, 1800°]");
         System.out.printf("Total iterations (t): %d. Total search budget: %d (n + e*p + (m-e)*q) calls per step.%n",
                 t, n + e*p + (m-e)*q);
@@ -176,11 +174,10 @@ public class Test {
     }
 
     public static void main(String[] args) {
-
-//        runTask1();
-//         runTask2();
-         runTask3();
         long startTime = System.currentTimeMillis();
+        runTask1();
+        runTask2();
+        runTask3();
         long endTime = System.currentTimeMillis();
         System.out.println(String.format("Execution Time: %.2f seconds", (endTime - startTime) / 1000.0));
     }

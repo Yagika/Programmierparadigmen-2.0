@@ -148,6 +148,7 @@ public class BeesAlgorithm {
     /**
      * Creates the local search bounds (s) centered around a given Location.
      * This ensures the search is constrained to the flower patch.
+     * Currently not a funcrional style
      */
     private static Bounds createLocalBounds(Location center, Bounds globalBounds, double relativeSize) {
         int a = globalBounds.getDimension();
