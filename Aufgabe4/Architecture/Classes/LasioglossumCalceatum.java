@@ -14,6 +14,10 @@ import java.util.Iterator;
  */
 public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee {
 
+
+    /**
+     * This Bee is either Social or Solitary. If Solitary it also can be Wild/Bred
+     */
     private final boolean isSocial;
     private final boolean isSolitary;
     private final boolean isWild;
@@ -30,6 +34,7 @@ public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee
         this.isSolitary = !isSocial;
         this.isWild = isWild;
     }
+
 
     @Override
     public Iterator<?> social() {
@@ -55,6 +60,3 @@ public class LasioglossumCalceatum extends Bee implements SocialBee, SolitaryBee
         return new SingleElementIterator<>(this);
     }
 }
-
-
-// Typically Social but is Solitary in colder climates

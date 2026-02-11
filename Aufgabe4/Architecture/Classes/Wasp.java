@@ -15,6 +15,8 @@ public abstract class Wasp implements Observation {
     /**
      * This class is abstract because it doesn't count as an Observation, since it is
      * just an overreaching term describing bugs with stingers.
+     * This could technically also be an Interface, but it wouldn't make sense to
+     * implement all the methods for each new class we want to add.
      * All Bees are Wasps, but not all Wasps are bees.
      */
     protected Date date;
@@ -56,17 +58,11 @@ public abstract class Wasp implements Observation {
         return !removed;
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> earlier() {
         return EmptyIterator.instance();
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> later() {
         return EmptyIterator.instance();

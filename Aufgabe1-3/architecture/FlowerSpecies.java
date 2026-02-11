@@ -13,15 +13,15 @@ import java.util.Random;
  * STYLE: object-oriented – each species maintains its own state and transitions.
  */
 public class FlowerSpecies {
-    public double y; // Growth strength (>=0)
-    public double b = 0; // Bloom amount (0..1)
-    public double s = 0; // Seed quality (0..1)
-    public final double c_lower, c_upper; // Reproduction limits
+    private double y; // Growth strength (>=0)
+    private double b = 0; // Bloom amount (0..1)
+    private double s = 0; // Seed quality (0..1)
+    private final double c_lower, c_upper; // Reproduction limits
     private final double f_lower, f_upper; // Moisture limits (0 < f_lower < f_upper < 1)
     private final double h_lower, h_upper; // Sunlight limits (hours, cumulative)
     private final double q; // Bloom intensity (0 < q < 1/15)
     private final double p; // Pollination probability (0 < p < 1/(h_upper - h_lower))
-    public final double brightness; // Flower brightness (affects bee preference)
+    private final double brightness; // Flower brightness (affects bee preference)
 
     /**
      * Constructs a plant species with given biological parameters.
@@ -110,16 +110,19 @@ public class FlowerSpecies {
         double preference; // preference multiplier for bees that prefer this plant based on color intensity
 
         for (Bee bee : bees) {
-            if (bee.c_lower <= this.brightness && this.brightness <= bee.c_upper) {
+            if (bee.getPrefLower() <= this.brightness && this.brightness <= bee.getPrefUpper()) {
                 preference = 1.25;
             } else {
                 preference = 0.75;
             }
 
+            double beeActivity = bee.getActivity();
+
             if (totalBees >= total_foodvalue) {
-                this.s += this.p * this.b * (d + 1.0) * bee.activity * preference / 5;
+                this.s += this.p * this.b * (d + 1.0) * beeActivity * preference / 5;
             } else {
-                this.s += this.p * this.b * (d + 1.0) * (totalBees / total_foodvalue) * bee.activity * preference / 5;
+                this.s += this.p * this.b * (d + 1.0) * (totalBees / total_foodvalue) *
+                        beeActivity * preference / 5;
             }
             if (this.s > 1.0) this.s = 1.0;
             if (this.s < 0.0) this.s = 0.0;
@@ -153,6 +156,30 @@ public class FlowerSpecies {
 
     public double getS() {
         return s;
+    }
+
+    public void setY(double y) {
+        this.y = Math.max(0.0, y);
+    }
+
+    public void setB(double b) {
+        this.b = Math.max(0.0, Math.min(1.0, b));
+    }
+
+    public void setS(double s) {
+        this.s = Math.max(0.0, Math.min(1.0, s));
+    }
+
+    public double getCLower() {
+        return c_lower;
+    }
+
+    public double getCUpper() {
+        return c_upper;
+    }
+
+    public double getBrightness() {
+        return brightness;
     }
 }
 

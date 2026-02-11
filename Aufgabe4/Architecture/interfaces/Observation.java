@@ -27,7 +27,6 @@ public interface Observation {
 
     /**
      * @return Description of the observed Bug (Architecture.Classes.Wasp/Architecture.Classes.Bee/Architecture.interfaces.Pollinator)
-     * Note: this does not have be all that serious, it just needs to "work"
      */
     String getDescription();
 

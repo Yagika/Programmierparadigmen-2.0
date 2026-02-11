@@ -14,20 +14,24 @@ import java.util.ArrayList;
  * - Wild bees and honeybees with realistic parameter distributions.
  * <p>
  * STYLE: procedural paradigm – provides utility functions independent of state.
- *
+ * <p>
  * We wanted to create a separate file that handles instantiation of objects
  * with values that we want to simulate. This led to the following outcomes:
- *
+ * <p>
  * GOOD: Control flow is easily traceable, names of methods and variables are clear, methods inside the module are
  * closely related and perform small number of related activities. Cohesion is high. Coupling (to FlowerGroup and
  * different kinds of pollinators) is low.
- *
+ * <p>
  * BAD: We use a lot of hardcoded values, most of them will have to be changed in case we want to modify the simulation,
- * */
+ */
 public class ObjectGenerator {
 
-    public static int MAX_DISTANCE = 2000;
+    private static int MAX_DISTANCE = 2000;
     //hardcode some values, use an array for simplicity, yes everything has to be a double just live with it:
+    /**
+     * BAD: many hard-coded magic numbers – changing the model requires editing code.
+     * GOOD: central table for species parameters makes experiments easier to compare.
+     */
     //                              y,    c-,  c+,  f-,  f+,  h-,  h+,  q,    p  brightness
     private static final double[][] F = {{10.0, 1.0, 10.0, 0.1, 0.9, 40, 350, 0.033, 0.5, 1.0},
             {7.0, 2.0, 11.0, 0.2, 0.8, 37, 410, 0.060, 0.7, 1.5},

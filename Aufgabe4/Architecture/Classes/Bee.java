@@ -18,20 +18,13 @@ import java.util.Iterator;
 public abstract class Bee extends Wasp implements Pollinator {
 
     /**
-     * Observation of a Bee. must be an abstract class because just "Bee" is not specific.
-     * As per the document, A Bee Observation might be that of the exact same Bee that was already Observed.
-     * This means if information is present that it's the same Bee.
-     * -If it is chipped: print (?) out its number
-     * -If Observation already exsists: print (?) out its earliest observed date
-     * The document leaves this up to interpretation I guess?
-     * I honestly don't know what they mean, probably instead of creating a new object return the old one.
-     * Todo: find out what they mean with this and implement it
+     * Bee is necessarily a subtype of Wasp. this is again an abstract class because it wouldn't make sense
+     * to implement each method again and again. Also every Bee is a Pollinator.
      */
 
     protected int chip;
 
     /**
-     * Todo: implement logic for Iterator
      * sameBee(), should return an Iterator of all Observation of the same individual Bee (this specific Observation.)
      * ordered from earliest Observation Date to latest.
      */
@@ -40,7 +33,6 @@ public abstract class Bee extends Wasp implements Pollinator {
     }
 
     /**
-     * Todo: implement logic
      * same as above, but this time reverse the order from latest to earliest.
      */
     public Iterator<?> sameBee(boolean reverse) {
@@ -48,7 +40,6 @@ public abstract class Bee extends Wasp implements Pollinator {
     }
 
     /**
-     * Todo: implement logic
      * only returns the Iterator sorted from earliest Observation Date to latest in this specific time frame.
      */
     public Iterator<?> sameBee(Date from, Date to) {

@@ -51,7 +51,6 @@ public class FlowerFly implements Pollinator {
         removed = true;
     }
 
-
     /**
      * Checks if Observation is removed.
      */
@@ -60,17 +59,11 @@ public class FlowerFly implements Pollinator {
         return !removed;
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> earlier() {
         return EmptyIterator.instance();
     }
 
-    /**
-     * Todo: Implement logic for Iterator.
-     */
     @Override
     public Iterator<?> later() {
         return EmptyIterator.instance();

@@ -8,10 +8,10 @@ package architecture;
  */
 public class Weather {
 
-    public double temperature;
-    public double previous_temp;
-    public double humidity;
-    public WeatherEvents event;
+    private double temperature;
+    private double previous_temp;
+    private double humidity;
+    private WeatherEvents event;
 
     /**
      * Enumeration of all weather event types.
@@ -130,5 +130,7 @@ public class Weather {
         return "Weather is currently: " + getWeatherType(event) + " with " + shortDouble + "°C and " + humidity + "% humidity";
     }
 
-
+    public WeatherEvents getEvent() {
+        return event;
+    }
 }
